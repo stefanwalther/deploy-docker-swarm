@@ -1,0 +1,9 @@
+{
+  "name": "deploy",
+  "version": "0.1.0",
+  "description": "Deploy scripts for sammler.io",
+  "main": "index.js",
+  "repository": "https://github.com/sammler/deploy",
+  "author": "Stefan Walther",
+  "license": "MIT"
+}
