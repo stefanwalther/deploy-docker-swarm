@@ -41,5 +41,6 @@ Caveats:
 
 ## Reference links
 
+Some articles which inspired this approach.
+
 - [Create a swarm cluster with Docker 1.12 swarm mode](http://lucjuggery.com/blog/?p=566) - Great article, thx a lot.
-- 
