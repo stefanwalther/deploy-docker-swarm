@@ -1,6 +1,6 @@
 # Deploy a swarm cluster on your local machine
 
-## Purpose
+## Summary
 
 - Create a few machines in VirtualBox
 - Init a swarm (manager + worker nodes)
@@ -15,7 +15,7 @@ _Note:_ The scripts are only tested on OSX, deployment on Windows will be covere
 
 ## Configuration
 
-All possible configurations are stored in `00-config.sh`:
+All possible configurations are stored in `config.sh`:
 
 ## Run
 
@@ -36,11 +36,14 @@ Caveats:
 
 ## Todos
 
+- [ ] Docker-compose 
 - [ ] Better error handling
+- [ ] Security setup, SSL generation
+- [ ] Expose configuration to be arguments
 - [ ] If there is not default docker-machine, then we run into troubles.
 
 ## Reference links
 
-Some articles which inspired this approach.
+Some articles which inspired this work.
 
 - [Create a swarm cluster with Docker 1.12 swarm mode](http://lucjuggery.com/blog/?p=566) - Great article, thx a lot.
