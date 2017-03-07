@@ -1,3 +1,7 @@
+
+# Source: https://github.com/docker/example-voting-app/blob/master/docker-stack.yml
+# Related article: https://docs.docker.com/engine/getstarted-voting-app/#docker-stackyml-deployment-configuration-file
+
 version: "3"
 services:
 
