@@ -4,6 +4,10 @@
 
 ## Summary
 
+## Examples
+
+- [Local deployment to VirtualBox](./local-bash) (using a bash file)
+
 ## About
 
 ### Author
