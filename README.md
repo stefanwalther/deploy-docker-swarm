@@ -1,3 +1,17 @@
-# Deploy scripts for sammler.io
+# deploy-docker-swarm
 
-Right now, just some kind of playground.
+> Deploy scripts for docker-swarm
+
+## Summary
+
+## About
+
+### Author
+**Stefan Walther**
+
+* [github/stefanwalther](https://github.com/stefanwalther)
+* [twitter/waltherstefan](http://twitter.com/waltherstefan)
+
+## License
+MIT
+

@@ -12,5 +12,29 @@
   "main": "index.js",
   "repository": "https://github.com/stefanwalther/deploy-docker-swarm",
   "author": "Stefan Walther",
-  "license": "MIT"
+  "license": "MIT",
+  "verb": {
+    "run": true,
+    "toc": false,
+    "layout": "empty",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "related": {
+      "list": []
+    },
+    "lint": {
+      "reflinks": true
+    },
+    "reflinks": [
+      "verb",
+      "verb-readme-generator"
+    ]
+  },
+  "scripts": {
+    "docs": "verb"
+  }
 }
