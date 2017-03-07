@@ -1,9 +1,16 @@
 {
-  "name": "deploy",
+  "name": "deploy-docker-swarm",
   "version": "0.1.0",
-  "description": "Deploy scripts for sammler.io",
+  "description": "Deploy scripts for docker-swarm",
+  "keywords": [
+    "docker",
+    "docker-swarm",
+    "bash",
+    "vagrant",
+    "VirtualBox"
+  ],
   "main": "index.js",
-  "repository": "https://github.com/sammler/deploy",
+  "repository": "https://github.com/stefanwalther/deploy-docker-swarm",
   "author": "Stefan Walther",
   "license": "MIT"
 }
