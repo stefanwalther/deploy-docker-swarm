@@ -1,13 +1,14 @@
 {
   "name": "deploy-docker-swarm",
   "version": "0.1.0",
-  "description": "Deploy scripts for docker-swarm",
+  "description": "Deploy scripts for docker-swarm to different (cloud-)providers and using differrent tools such as bash, Vagrant, Ansible, Terraform.",
   "keywords": [
     "docker",
     "docker-swarm",
     "bash",
     "vagrant",
-    "VirtualBox"
+    "VirtualBox",
+    "Ansible"
   ],
   "main": "index.js",
   "repository": "https://github.com/stefanwalther/deploy-docker-swarm",
