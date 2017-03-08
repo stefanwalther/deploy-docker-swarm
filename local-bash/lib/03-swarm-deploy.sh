@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 
-function deploy() {
+function swarm_deploy() {
 
   docker-machine scp ./docker-stack.yml manager-1:/home/docker/docker-stack.yml
   docker-machine ssh manager-1 cd /home/docker;

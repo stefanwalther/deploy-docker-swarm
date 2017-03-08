@@ -1,0 +1,12 @@
+---
+# Monitoring - metric collection, filtering, storage and UI
+
+- hosts: managers[0]
+  become: yes
+  become_user: root
+  roles:
+    - { role: common, tags: [common] }
+    - { role: influxdb, tags: [influxdb] }
+    - { role: riemann, tags: [riemann] }
+    - { role: collectd, tags: [collectd] }
+    - { role: grafana, tags: [grafana] }

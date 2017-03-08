@@ -13,12 +13,12 @@ local virtualbox_disk_size=${2:-10000}
 
 echo "${LCYAN}CREATING MACHINE \"$machine_name\" ${RESTORE}"
 
-# Todo: Handle error if this returns "Error"/"machine does not exist"
+# Todo: Handle error if this returns "Error"/"machine does not exist" => actually not sure where this is coming from?!
 if [ ! -z "$(docker-machine ls | grep $machine_name)" ];
 then
   echo "${SPACE}${GRAY}${S_BULLET} Machine \"$machine_name\" already exists!${RESTORE}"
-  docker-machine stop $machine_name > /dev/null || true
-  docker-machine rm -y $machine_name > /dev/null || true
+  docker-machine stop $machine_name > /dev/null || true;
+  docker-machine rm -y $machine_name > /dev/null || true;
   echo "${SPACE}${GREEN}${S_CHECK} Machine \"$machine_name\" successfully removed.${RESTORE}"
 fi
 

@@ -1,0 +1,45 @@
+---
+
+- name: Build collectd container
+  run_once: true
+  become: yes
+  become_user: root
+  docker_image:
+    path: /vagrant/collectd
+    name: "{{ collectd_name }}"
+    archive_path: "{{ collectd_docker_tar }}"
+
+- name: Get existing services
+  shell: >
+    docker service ls --filter name={{ collectd_name }} | tail -n +2
+  register: collectd_result
+
+- name: load collectd image
+  become: yes
+  become_user: root
+  shell: >
+    docker load -i {{ collectd_docker_tar }}
+  when: item != "{{ groups['managers'][0] }}"
+  delegate_to: "{{ item }}"
+  with_items: "{{ groups['all'] }}"
+
+- name: Clean up collectd image
+  run_once: true
+  become: yes
+  become_user: root
+  file: path={{ collectd_docker_tar }} state=absent
+
+- name: Stopped existing collectd service
+  become: yes
+  become_user: root
+  shell: >
+    docker service rm {{ collectd_name }}
+  when: "'collectd' in collectd_result.stdout"
+
+# Could possibly be an issue with the --priviledged flag which is not available
+# for services
+- name: Running collectd container
+  become: yes
+  become_user: root
+  shell: >
+    docker service create {{ collectd_service_definition }}

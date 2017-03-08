@@ -7,4 +7,4 @@ source $SCRIPT_DIR/lib/constants.sh
 source $SCRIPT_DIR/config.sh
 source $SCRIPT_DIR/lib/03-swarm-deploy.sh
 
-deploy
+swarm_deploy
