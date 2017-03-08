@@ -43,7 +43,6 @@ Pros:
 - Gives you full control and feels more direct
 - No conversion from the docker-compose file to another format necessary (e.g. compared to Ansible)
 - Easy to extend and adapt
-- Seems to be much faster than the Vagrant/Ansible approach (?!)
 
 Cons:
 
@@ -64,6 +63,7 @@ Cons:
 ## About
 
 ### Contributing
+Comments, Issues and PR are highly welcome.
 
 ### Author
 **Stefan Walther**
