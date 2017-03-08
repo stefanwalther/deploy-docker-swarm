@@ -14,7 +14,7 @@ I am by no means an expert in this area. Working on the different scenarios prim
 
 ## Scenarios
 
-- Scenario 1: [Local deployment to VirtualBox](./local-bash) using bash-scripts
+- Scenario 1: [Local deployment to VirtualBox using bash-scripts](./local-bash)
 - Scenario 2: Local deployment to VirtualBox using Vagrant/Ansible 
 - Scenario 3: Deployment to DigitalOcean using bash-scripts
 - Scenario 4: Deployment to DigitalOcean using Vagrant/Ansible
@@ -43,6 +43,8 @@ Different tools have been used each of the scenarios, which also allows to compa
 Have a look at the README of the corresponding scenario to understand which of the tools are needed.
 
 ## Comparison of the different approaches used
+Just a personal opinion having worked on all these examples.  
+(_Feel free to comment, add your findings or just disagree_)
 
 ### Bash
 
