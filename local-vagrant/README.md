@@ -1,7 +1,10 @@
 
 ## Prerequisites
 
-
+- [VirtualBox](https://www.virtualbox.org/)
+  - [Guest Additions for VirtualBox](https://docs.oracle.com/cd/E36500_01/E36502/html/qs-guest-additions.html)
+- [Docker for Mac](https://docs.docker.com/docker-for-mac/) / [Docker for Windows](https://docs.docker.com/docker-for-windows/)
+- [Vagrant](https://www.vagrantup.com/)
 
 ## Run
 
