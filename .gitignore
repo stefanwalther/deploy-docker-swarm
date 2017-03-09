@@ -6,6 +6,7 @@ log-test.log
 # IDEs
 .vscode
 .idea
+.vagrant
 
 # always ignore files
 *.DS_Store
