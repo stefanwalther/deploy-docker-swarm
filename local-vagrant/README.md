@@ -53,7 +53,6 @@ $ vagrant ssh manager-1
 vagrant@manager-1:~$ docker node ls
 ```
 
-
 Destroy machine + resources created:
 ```sh
 $ vagrant destroy --force

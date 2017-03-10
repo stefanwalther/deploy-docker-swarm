@@ -10,8 +10,5 @@ function install_vagrant_plugin() {
   fi
 }
 
-install_vagrant_plugin vagrant-alpine
 install_vagrant_plugin vagrant-host-shell
 install_vagrant_plugin vagrant-vbguest
-
-vagrant up
