@@ -36,7 +36,7 @@ if [ ! -d "/vagrant/.vagrant/swarm-token" ]; then
     docker swarm init --advertise-addr eth1:2377
     docker swarm join-token -q manager > /vagrant/.vagrant/swarm-token/manager
     docker swarm join-token -q worker > /vagrant/.vagrant/swarm-token/worker
-    docker stack deploy --compose-file /vagrant/docker-stack.yml vote
+    #docker stack deploy --compose-file /vagrant/docker-stack.yml vote
 else
     docker swarm join \
       --token `cat /vagrant/.vagrant/swarm-token/manager` \
@@ -98,8 +98,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  #config.vm.provision :host_shell do |host_shell|
-  #  host_shell.inline = 'vagrant ssh manager-1 docker stack deploy --compose-file /vagrant/docker-stack.yml vote'
-  #end
+  config.vm.provision :host_shell do |host_shell|
+    host_shell.inline = 'vagrant ssh manager-1 -- docker stack deploy --compose-file /vagrant/docker-stack.yml vote'
+  end
 
 end

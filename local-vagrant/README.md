@@ -60,9 +60,21 @@ $ vagrant destroy --force
 Stops the running machine Vagrant is managing and destroys all resources that were created during the machine creation process
 [Vagrant => destroy](https://www.vagrantup.com/docs/cli/destroy.html)
 
+## Tips & Tricks
+
+If you want to see how long it takes to set up your environment, prepend the `vagrant up` with `time`:
+
+```sh
+$ time vagrant up
+```
+
 ## Todos
 
 - [ ] Security setup, SSL generation
+- [ ] Automatically install the vagrant plugins without `vagrant-plugins.sh`
+- [ ] Check which OS to use
+- [ ] Make sure that all configurations are used
+- [ ] Investigate how to run some test-scripts at the end
 
 ## Reference links
 
