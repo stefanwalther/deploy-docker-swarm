@@ -16,7 +16,7 @@
   "license": "MIT",
   "verb": {
     "run": true,
-    "toc": false,
+    "toc": true,
     "layout": "empty",
     "tasks": [
       "readme"
