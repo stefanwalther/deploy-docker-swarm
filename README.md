@@ -36,7 +36,7 @@ $ git clone https://github.com/stefanwalther/deploy-docker-swarm
 
 ## Tools being used
 
-Different tools have been used each of the scenarios, which also allows to compare the different approaches:
+Different tools have been used in the different scenarios, which also allows to compare the different approaches:
  
 - [VirtualBox](https://www.virtualbox.org/)
   - [Guest Additions for VirtualBox](https://docs.oracle.com/cd/E36500_01/E36502/html/qs-guest-additions.html)
@@ -48,32 +48,8 @@ Different tools have been used each of the scenarios, which also allows to compa
 Have a look at the README of the corresponding scenario to understand which of the tools are needed.
 
 ## Comparison of the different approaches used
-Just a personal opinion having worked on all these examples.  
-(_Feel free to comment, add your findings or just disagree_)
 
-### Bash
-
-Pros:
-
-- Gives you full control and feels more direct
-- No conversion from the docker-compose file to another format necessary (e.g. compared to Ansible)
-- Easy to extend and adapt
-
-Cons:
-
-- Scripting work needed
-- Not necessarily platform agnostic (e.g. compared to the usage of Vagrant/Ansible)
-- Completely different implementation on local vs. a cloud-provider implementation
-
-### Vagrant/Ansible
-
-Pros:
-
-- Platform agnostic approach, both Vagrant and Ansible support Windows & MAC/OSX
-
-Cons:
-
-- Conversion of the docker-compose file necessary
+- [Comparison](docs/comparison.md)
 
 ## About
 

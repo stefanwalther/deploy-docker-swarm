@@ -1,7 +1,7 @@
 Just a personal opinion having worked on all these examples.  
 (_Feel free to comment, add your findings or just disagree_)
 
-### Bash
+## Bash
 
 Pros:
 
@@ -16,7 +16,7 @@ Cons:
 - Completely different implementation on local vs. a cloud-provider implementation
 
 
-### Vagrant/Ansible
+## Vagrant/Ansible
 
 Pros:
 
