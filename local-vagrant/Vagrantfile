@@ -1,15 +1,40 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-VAGRANTFILE_API_VERSION = "2"
-MANAGERS = 1
-WORKERS = 3
+# -------------------------------------------------------------------
+# Configuration options
+# -------------------------------------------------------------------
+NUM_OF_MANAGERS=2
+NUM_OF_WORKERS=5
 SIZE = 1024
-CPU = 2
+NUM_CPUS = 2
+# -------------------------------------------------------------------
+# (End configuration options)
+
+# -- Internal variables
+VAGRANTFILE_API_VERSION = "2"
+
+@initManager = <<EOD
+echo Arguments: $*
+if [ ! -d "/vagrant/.vagrant/swarm-token" ]; then
+    mkdir /vagrant/.vagrant/swarm-token
+    chmod 777 /vagrant/.vagrant/swarm-token
+
+    docker swarm init --advertise-addr eth1:2377
+    docker swarm join-token -q manager > /vagrant/.vagrant/swarm-token/manager
+    docker swarm join-token -q worker > /vagrant/.vagrant/swarm-token/worker
+else
+    docker swarm join \
+      --token `cat /vagrant/.vagrant/swarm-token/manager` \
+      192.168.50.100:2377
+fi
+EOD
+
+
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "promet/centos-docker"
+  config.vm.box = "ubuntu/trusty64"
 
   config.vm.provider 'virtualbox' do |v|
     v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
@@ -17,15 +42,29 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.ssh.insert_key = false
 
-  (1..MANAGERS).each do |manager_id|
-    config.vm.define "manager-#{manager_id}" do |manager|
-      manager.vm.hostname = "manager-#{manager_id}"
-      manager.vm.network "private_network", ip: "192.168.77.#{20+manager_id}"
-      manager.vm.provider "virtualbox" do |v|
+  (1..NUM_OF_MANAGERS).each do |mgrNumber|
+    config.vm.define "manager-#{mgrNumber}" do |node|
+      node.vm.hostname = "manager-#{mgrNumber}"
+      node.vm.network "private_network", ip: "192.168.50.#{99+mgrNumber}"
+      node.vm.provider "virtualbox" do |v|
         v.memory = 1024
         v.cpus = 2
       end
+      #node.vm.provision "shell", inline: "sudo apt-get update"
+      node.vm.provision "docker"
+      node.vm.provision "shell", inline: @initManager, args: [ "#{NUM_OF_MANAGERS}" , "192.168.50.#{99+mgrNumber}" ]
     end
   end
+
+#  (1..WORKERS).each do |worker_id|
+#    config.vm.define "worker-#{worker_id}" do |worker|
+#      worker.vm.hostname = "worker-#{worker_id}"
+#      worker.vm.network "private_network", ip: "192.168.50.#{149+worker_id}"
+#      worker.vm.provider "virtualbox" do |v|
+#        v.memory = 1024
+#        v.cpus = 2
+#      end
+#    end
+#  end
 
 end
