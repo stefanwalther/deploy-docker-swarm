@@ -14,12 +14,17 @@ I am by no means an expert in this area. Working on the different scenarios prim
 
 ## Scenarios
 
-- Scenario 1: [Local deployment to VirtualBox using bash-scripts](./local-bash)
-- Scenario 2: Local deployment to VirtualBox using Vagrant/Ansible 
-- Scenario 3: Deployment to DigitalOcean using bash-scripts
-- Scenario 4: Deployment to DigitalOcean using Vagrant/Ansible
+- Scenario 1: [Local deployment to VirtualBox using bash only](./local-bash)
+- Scenario x: Local deployment to VirtualBox using Vagrant only
+- Scenario x: Local deployment to VirtualBox using Vagrant/Ansible 
+- Scenario x: Deployment to DigitalOcean using bash only
+- Scenario x: Deployment to DigitalOcean using Vagrant only
+- Scenario x: Deployment to DigitalOcean using Vagrant/Ansible
+- Scenario x: Using rancher to deploy locally (?)
+- Scenario x: Using rancher to deploy to DigitalOcean
+- Scenario x: Deployment to AWS using Vagrant only
 
-_Note:_ Scenarios not being linked to the solution are not started/finished, yet.
+_Note:_ Scenarios not being linked to a solution are not started/finished, yet.
 
 ## Install
 
