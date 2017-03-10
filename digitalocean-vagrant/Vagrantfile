@@ -41,40 +41,5 @@ EOD
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "ubuntu/trusty64"
-
-  config.vm.provider 'virtualbox' do |v|
-    v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
-  end
-
-  config.ssh.insert_key = false
-
-  (1..NUM_OF_MANAGERS).each do |mgrNumber|
-    config.vm.define "manager-#{mgrNumber}" do |node|
-      node.vm.hostname = "manager-#{mgrNumber}"
-      node.vm.network "private_network", ip: "192.168.50.#{99+mgrNumber}"
-      node.vm.provider "virtualbox" do |v|
-        v.memory = 1024
-        v.cpus = 2
-      end
-      #node.vm.provision "shell", inline: "sudo apt-get update"
-      node.vm.provision "docker"
-      node.vm.provision "shell", inline: @initManager, args: [ "#{NUM_OF_MANAGERS}" , "192.168.50.#{99+mgrNumber}", "#{mgrNumber}" ]
-    end
-  end
-
-  (1..NUM_OF_WORKERS).each do |workerNumber|
-    config.vm.define "worker-#{workerNumber}" do |node|
-      node.vm.hostname = "worker-#{workerNumber}"
-      node.vm.network "private_network", ip: "192.168.50.#{149+workerNumber}"
-      node.vm.provider "virtualbox" do |v|
-        v.memory = 1024
-        v.cpus = 2
-      end
-      #node.vm.provision "shell", inline: "sudo apt-get update"
-      node.vm.provision "docker"
-      node.vm.provision "shell", inline: @initWorker
-    end
-  end
 
 end
