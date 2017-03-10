@@ -11,43 +11,56 @@ NUM_CPUS = 2
 # -------------------------------------------------------------------
 # (End configuration options)
 
+#unless Vagrant.has_plugin?("vagrant-docker-compose")
+#  system("vagrant plugin install vagrant-docker-compose")
+#  puts "Dependencies installed, please try the command again."
+#  exit
+#end
+
 # -- Internal variables
 VAGRANTFILE_API_VERSION = "2"
 
-@initManager = <<EOD
+@deleteTokens = <<SHELL
+  rm -rf /vagrant/.vagrant/swarm-token
+SHELL
+
+@initManager = <<SHELL
 echo initManager Arguments: $*
-local currManager=$3
-# Todo: We have an issue here, if re-creating the machines, then the old token will be re-used, which is wrong ...
+# Todo: @deleteTokens is the solutions, just have to trigger it here ...
 if [ ! -d "/vagrant/.vagrant/swarm-token" ]; then
     mkdir /vagrant/.vagrant/swarm-token
     chmod 777 /vagrant/.vagrant/swarm-token
 
+    echo $2 > /vagrant/.vagrant/swarm_manager_ip
+
     docker swarm init --advertise-addr eth1:2377
     docker swarm join-token -q manager > /vagrant/.vagrant/swarm-token/manager
     docker swarm join-token -q worker > /vagrant/.vagrant/swarm-token/worker
+    docker stack deploy --compose-file /vagrant/docker-stack.yml vote
 else
     docker swarm join \
       --token `cat /vagrant/.vagrant/swarm-token/manager` \
       192.168.50.100:2377
 fi
-EOD
+SHELL
 
-@initWorker = <<EOD
+@initWorker = <<SHELL
 docker swarm join \
   --token `cat  /vagrant/.vagrant/swarm-token/worker` \
   192.168.50.100:2377
-EOD
+SHELL
 
-@deploySwarm = <<EOD
+@deploySwarm = <<SHELL
+    docker stack deploy --compose-file /vagrant/docker-stack.yml vote;
+SHELL
 
-docker-machine scp ./docker-stack.yml manager-1:/home/docker/docker-stack.yml;
-docker-machine ssh manager-1 cd /home/docker;
-docker-machine ssh manager-1 docker stack deploy --compose-file docker-stack.yml vote;
-
-EOD
-
+@cleanUp = <<SHELL
+  rm -rf /vagrant/.vagrant/swarm-token
+SHELL
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  #config.vm.provision "shell", inline: @cleanUp
 
   config.vm.box = "ubuntu/trusty64"
 
@@ -85,6 +98,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  #machine-1.vm.provision "shell", inline: $deploySwarm
+  #config.vm.provision :host_shell do |host_shell|
+  #  host_shell.inline = 'vagrant ssh manager-1 docker stack deploy --compose-file /vagrant/docker-stack.yml vote'
+  #end
 
 end
