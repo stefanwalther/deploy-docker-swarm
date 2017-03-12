@@ -4,15 +4,23 @@
 # -------------------------------------------------------------------
 # Configuration options
 # -------------------------------------------------------------------
-NUM_OF_MANAGERS=1
-NUM_OF_WORKERS=1
-SIZE = 1024
-NUM_CPUS = 2
+NUM_OF_MANAGERS=2
+NUM_OF_WORKERS=2
+DO_REGION="fra1"
+DO_IMAGE="docker-16-04"
+DO_SIZE="1gb"
+DO_ACCESS_TOKEN=ENV['DO_TOKEN']
 # -------------------------------------------------------------------
 # (End configuration options)
 
 # -- Internal variables
 VAGRANTFILE_API_VERSION = "2"
+
+# -- Install the required plugins
+required_plugins = %w( vagrant-digitalocean vagrant-host-shell vagrant-vbguest vagrant-triggers )
+required_plugins.each do |plugin|
+  system "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
+end
 
 @initManager = <<EOD
 echo initManager Arguments: $*
@@ -41,5 +49,21 @@ EOD
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
+  config.vm.define "droplet1" do |config|
+    config.vm.provider :digital_ocean do |provider, override|
+
+      override.ssh.private_key_path = '~/.ssh/do_id_rsa'
+      provider.ssh_key_name = 'vagrant'
+
+      override.vm.box = 'digital_ocean'
+      override.vm.box_url = "https://github.com/devopsgroup-io/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+
+      provider.token = DO_ACCESS_TOKEN
+      provider.image = "docker"
+      provider.region = "fra1"
+      provider.size = "1gb"
+      provider.ipv6 = false
+    end
+  end
 
 end
