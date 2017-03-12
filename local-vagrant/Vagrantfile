@@ -11,6 +11,7 @@ NUM_CPUS = 2
 # -------------------------------------------------------------------
 # (End configuration options)
 
+# -- Install the required plugins
 required_plugins = %w( vagrant-host-shell vagrant-vbguest vagrant-triggers )
 required_plugins.each do |plugin|
   system "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
