@@ -41,6 +41,7 @@ services:
         parallelism: 2
       restart_policy:
         condition: on-failure
+
   result:
     image: dockersamples/examplevotingapp_result:before
     ports:
@@ -81,6 +82,18 @@ services:
     stop_grace_period: 1m30s
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  portainer:
+    image: portainer/portainer
+    command: -H unix:///var/run/docker.sock
+    ports:
+      - "9000:9000"
+    volumes:
+      - /portainer-data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
     deploy:
       placement:
         constraints: [node.role == manager]

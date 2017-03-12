@@ -4,18 +4,17 @@
 # -------------------------------------------------------------------
 # Configuration options
 # -------------------------------------------------------------------
-NUM_OF_MANAGERS=1
-NUM_OF_WORKERS=1
-SIZE = 1024
+NUM_OF_MANAGERS=2
+NUM_OF_WORKERS=2
+MEMORY = 2048
 NUM_CPUS = 2
 # -------------------------------------------------------------------
 # (End configuration options)
 
-#unless Vagrant.has_plugin?("vagrant-docker-compose")
-#  system("vagrant plugin install vagrant-docker-compose")
-#  puts "Dependencies installed, please try the command again."
-#  exit
-#end
+required_plugins = %w( vagrant-host-shell vagrant-vbguest vagrant-triggers )
+required_plugins.each do |plugin|
+  system "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
+end
 
 # -- Internal variables
 VAGRANTFILE_API_VERSION = "2"
@@ -28,34 +27,36 @@ SHELL
 echo initManager Arguments: $*
 # Todo: @deleteTokens is the solutions, just have to trigger it here ...
 if [ ! -d "/vagrant/.vagrant/swarm-token" ]; then
-    mkdir /vagrant/.vagrant/swarm-token
-    chmod 777 /vagrant/.vagrant/swarm-token
+  mkdir /vagrant/.vagrant/swarm-token
+  chmod 777 /vagrant/.vagrant/swarm-token
 
-    echo $2 > /vagrant/.vagrant/swarm_manager_ip
+  echo $2 > /vagrant/.vagrant/swarm_manager_ip
 
-    docker swarm init --advertise-addr eth1:2377
-    docker swarm join-token -q manager > /vagrant/.vagrant/swarm-token/manager
-    docker swarm join-token -q worker > /vagrant/.vagrant/swarm-token/worker
-    #docker stack deploy --compose-file /vagrant/docker-stack.yml vote
+  docker swarm init --advertise-addr eth1:2377
+  docker swarm join-token -q manager > /vagrant/.vagrant/swarm-token/manager
+  docker swarm join-token -q worker > /vagrant/.vagrant/swarm-token/worker
+  #docker stack deploy --compose-file /vagrant/docker-stack.yml vote
 else
-    docker swarm join \
-      --token `cat /vagrant/.vagrant/swarm-token/manager` \
-      192.168.50.100:2377
+  docker swarm join \
+    --token `cat /vagrant/.vagrant/swarm-token/manager` \
+    192.168.50.100:2377
 fi
 SHELL
 
 @initWorker = <<SHELL
-docker swarm join \
-  --token `cat  /vagrant/.vagrant/swarm-token/worker` \
-  192.168.50.100:2377
+  docker swarm join \
+    --token `cat  /vagrant/.vagrant/swarm-token/worker` \
+    192.168.50.100:2377
 SHELL
 
 @deploySwarm = <<SHELL
-    docker stack deploy --compose-file /vagrant/docker-stack.yml vote;
+  docker stack deploy \
+    --compose-file /vagrant/docker-stack.yml vote
 SHELL
 
 @cleanUp = <<SHELL
-  rm -rf /vagrant/.vagrant/swarm-token
+  rm -rf /vagrant/.vagrant/swarm-token;
+  rm -rf /vagrant/.vagrant/swarm_manager_ip;
 SHELL
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -63,6 +64,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.vm.provision "shell", inline: @cleanUp
 
   config.vm.box = "ubuntu/trusty64"
+  config.vm.provision "docker"
 
   config.vm.provider 'virtualbox' do |v|
     v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
@@ -75,10 +77,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.hostname = "manager-#{mgrNumber}"
       node.vm.network "private_network", ip: "192.168.50.#{99+mgrNumber}"
       node.vm.provider "virtualbox" do |v|
-        v.memory = 1024
+        v.memory = MEMORY
         v.cpus = 2
       end
-      #node.vm.provision "shell", inline: "sudo apt-get update"
+      node.vm.provision "shell", inline: "sudo apt-get update"
       node.vm.provision "docker"
       node.vm.provision "shell", inline: @initManager, args: [ "#{NUM_OF_MANAGERS}" , "192.168.50.#{99+mgrNumber}", "#{mgrNumber}" ]
     end
@@ -89,17 +91,25 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.hostname = "worker-#{workerNumber}"
       node.vm.network "private_network", ip: "192.168.50.#{149+workerNumber}"
       node.vm.provider "virtualbox" do |v|
-        v.memory = 1024
+        v.memory = MEMORY
         v.cpus = 2
       end
-      #node.vm.provision "shell", inline: "sudo apt-get update"
+      node.vm.provision "shell", inline: "sudo apt-get update"
       node.vm.provision "docker"
       node.vm.provision "shell", inline: @initWorker
+
+      # Todo: Not really nice, but couldn't find any better way to provision one of the managers at "the end" of the process
+      # Any hint welcome how to improve this ...
+      if NUM_OF_WORKERS == workerNumber
+        node.vm.provision :host_shell do |host_shell|
+          host_shell.inline = 'vagrant ssh manager-1 -- docker stack deploy --compose-file /vagrant/docker-stack.yml vote'
+        end
+        #node.vm.provision "shell", inline: "ssh vagrant@manager-1 docker stack deploy --compose-file /vagrant/docker-stack.yml vote"
+      end #end if
+
     end
   end
 
-  config.vm.provision :host_shell do |host_shell|
-    host_shell.inline = 'vagrant ssh manager-1 -- docker stack deploy --compose-file /vagrant/docker-stack.yml vote'
-  end
+
 
 end

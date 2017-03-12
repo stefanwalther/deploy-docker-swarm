@@ -2,7 +2,6 @@
 ## Prerequisites
 
 - [VirtualBox](https://www.virtualbox.org/)
-  - [Guest Additions for VirtualBox](https://docs.oracle.com/cd/E36500_01/E36502/html/qs-guest-additions.html)
 - [Docker for Mac](https://docs.docker.com/docker-for-mac/) / [Docker for Windows](https://docs.docker.com/docker-for-windows/)
 - [Vagrant](https://www.vagrantup.com/)
 
@@ -11,6 +10,7 @@
 If you have already installed all of the pre-requisites, then you are ready to go!
 
 Run with default options (1 manager, 2 workers).
+
 ```sh
 $ vagrant up
 ```
@@ -46,12 +46,7 @@ ssh into a machine:
 $ vagrant ssh <machine-name>
 ```
 
-List the nodes in the swarm:
-
-```sh
-$ vagrant ssh manager-1
-vagrant@manager-1:~$ docker node ls
-```
+[Play with it](./docs/play-with-it.md)
 
 Destroy machine + resources created:
 ```sh
@@ -71,12 +66,15 @@ $ time vagrant up
 ## Todos
 
 - [ ] Security setup, SSL generation
-- [ ] Automatically install the vagrant plugins without `vagrant-plugins.sh`
+- [x] Automatically install the vagrant plugins without `vagrant-plugins.sh`
 - [ ] Check which OS to use
 - [ ] Make sure that all configurations are used
 - [ ] Investigate how to run some test-scripts at the end
+- [ ] Enable experimental docker service logs (see https://sreeninet.wordpress.com/2017/01/27/docker-1-13-experimental-features/)
 
 ## Reference links
 
 - [Docker swarm mode sample app](https://docs.docker.com/engine/getstarted-voting-app/) 
 - [Code sample docker swarm mode](https://github.com/eyal-lupu/vagrant-docker-swarm-mode/blob/master/Vagrantfile)
+- https://github.com/docker/docker/issues/31516
+- https://technology.amis.nl/2015/08/22/first-steps-with-provisioning-of-docker-containers-using-vagrant-as-provider/
