@@ -1,3 +1,5 @@
+#Comparison of the different approaches
+
 Just a personal opinion having worked on all these examples.  
 (_Feel free to comment, add your findings or just disagree_)
 
@@ -15,6 +17,16 @@ Cons:
 - Not necessarily platform agnostic (e.g. compared to the usage of Vagrant/Ansible)
 - Completely different implementation on local vs. a cloud-provider implementation
 
+## Vagrant
+
+Pros:
+
+- Platform agnostic
+- Many providers, such as AWS
+
+Cons:
+
+- 
 
 ## Vagrant/Ansible
 

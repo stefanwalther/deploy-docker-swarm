@@ -29,8 +29,9 @@ I am by no means an expert in this area. Working on the different scenarios prim
 ## Scenarios
 
 - Scenario 1: [Local deployment to VirtualBox using bash only](./local-bash)
-- Scenario x: Local deployment to VirtualBox using Vagrant only
+- Scenario 2: [Local deployment to VirtualBox using Vagrant only](./local-vagrant)
 - Scenario x: Local deployment to VirtualBox using Vagrant/Ansible 
+- Scenario x: Local deployment using the Docker-on-docker approach
 - Scenario x: Deployment to DigitalOcean using bash only
 - Scenario x: Deployment to DigitalOcean using Vagrant only
 - Scenario x: Deployment to DigitalOcean using Vagrant/Ansible
