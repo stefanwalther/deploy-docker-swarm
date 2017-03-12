@@ -71,10 +71,11 @@ $ time vagrant up
 - [ ] Make sure that all configurations are used
 - [ ] Investigate how to run some test-scripts at the end
 - [ ] Enable experimental docker service logs (see https://sreeninet.wordpress.com/2017/01/27/docker-1-13-experimental-features/)
+- [ ] Potential improvement to use a YML to share the configuration: http://blog.scottlowe.org/2016/01/14/improved-way-yaml-vagrant/
 
 ## Reference links
 
 - [Docker swarm mode sample app](https://docs.docker.com/engine/getstarted-voting-app/) 
 - [Code sample docker swarm mode](https://github.com/eyal-lupu/vagrant-docker-swarm-mode/blob/master/Vagrantfile)
 - https://github.com/docker/docker/issues/31516
-- https://technology.amis.nl/2015/08/22/first-steps-with-provisioning-of-docker-containers-using-vagrant-as-provider/
+- https://technology.amis.nl/2015/08/22/first-steps-with-provisioning-of-docker-containers-using-vagrant-as-provider/ and https://www.simonholywell.com/post/2016/02/intelligent-vagrant-and-ansible-files/
