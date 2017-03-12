@@ -49,14 +49,15 @@ EOD
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
+  config.vm.box = "digital_ocean"
+  config.vm.box_url = "https://github.com/devopsgroup-io/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+  config.vm.provision "docker"
+
   config.vm.define "droplet1" do |config|
     config.vm.provider :digital_ocean do |provider, override|
 
       override.ssh.private_key_path = '~/.ssh/do_id_rsa'
       provider.ssh_key_name = 'vagrant'
-
-      override.vm.box = 'digital_ocean'
-      override.vm.box_url = "https://github.com/devopsgroup-io/vagrant-digitalocean/raw/master/box/digital_ocean.box"
 
       provider.token = DO_ACCESS_TOKEN
       provider.image = DO_IMAGE
