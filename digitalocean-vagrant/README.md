@@ -21,11 +21,16 @@ Open the `Vagrantfile` and change the configuration options at the top of the fi
 
 - `NUM_OF_MANAGERS` - Number of managers to create (defaults to `2`).
 - `NUM_OF_WORKERS` - Number of workers to create (defaults to `2`).
-- `MEMORY` - Allocated memory for each of the machines (defaults to `1024`)
-- `NUM_CPUS` - Allocated number of CPUs for each of the machines (defaults ot `2`)
+
+- `DO_REGION` - DigitalOcean region (defaults to `fra1`).
+- `DO_IMAGE` - DigitalOcean image to be used (defaults to `docker-16-04`).
+- `DO_SIZE` - Size of the droplet (defaults to `1gb`).
+- `DO_ACCESS_TOKEN` - DigitalOcean access token (Default to environment variable `DO_TOKEN`).
+
+To get the list of possible values for regions, images and sizes, follow the instructions [here](./../docs/digitalocean-tips-tricks.md).
 
 ## Todos
 
-- [ ] Test with a clean account to describe the SSH dependencies/setup better
+- [x] Test with a clean account to describe the SSH dependencies/setup better
 
 ## Reference links
