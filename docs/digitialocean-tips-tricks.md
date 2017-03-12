@@ -4,12 +4,31 @@
 
 To get the list of possible regions, sizes, etc from DigitalOcean you can use
 
+- The vagrant-digitalocean plugin
 - The [Official DigitalOcean CLI](https://www.digitalocean.com/community/tutorials/how-to-use-doctl-the-official-digitalocean-command-line-client)
 - The [DigitalOcean REST API](https://developers.digitalocean.com/documentation/v2/)
  
 
 All the command require that you have first created an API token on DO.
 For convenience reasons I have put this into an environment variable `DO_TOKEN`
+ 
+### Get the information using the vagrant-digitalocean plugin
+ 
+List all available regions:
+```sh
+$ vagrant digitalocean-list regions $DO_TOKEN
+```
+
+List the available images:
+```sh
+$ vagrant digitalocean-list images $DO_TOKEN
+
+```
+
+List the available droplet sizes:
+```sh
+$ vagrant digitalocean-list sizes $DO_TOKEN
+```
  
 ### Get the information using the DO CLI
  
