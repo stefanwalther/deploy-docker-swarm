@@ -59,9 +59,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       override.vm.box_url = "https://github.com/devopsgroup-io/vagrant-digitalocean/raw/master/box/digital_ocean.box"
 
       provider.token = DO_ACCESS_TOKEN
-      provider.image = "docker"
-      provider.region = "fra1"
-      provider.size = "1gb"
+      provider.image = DO_IMAGE
+      provider.region = DO_REGION
+      provider.size = DO_SIZE
       provider.ipv6 = false
     end
   end
