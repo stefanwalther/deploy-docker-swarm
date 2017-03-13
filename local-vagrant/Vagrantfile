@@ -1,15 +1,14 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# -------------------------------------------------------------------
-# Configuration options
-# -------------------------------------------------------------------
-NUM_OF_MANAGERS=2
-NUM_OF_WORKERS=2
-MEMORY = 2048
-NUM_CPUS = 2
-# -------------------------------------------------------------------
-# (End configuration options)
+require 'yaml'
+settings = YAML.load_file 'config.yml'
+
+# -- Getting configuration from config.ml
+NUM_OF_MANAGERS=settings['NUM_OF_MANAGERS']
+NUM_OF_WORKERS=settings['NUM_OF_WORKERS']
+MEMORY=settings['MEMORY']
+NUM_CPUS=settings['NUM_CPUS']
 
 # -- Install the required plugins
 require File.dirname(__FILE__)+"/lib/dependency_manager"
@@ -79,7 +78,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         v.memory = MEMORY
         v.cpus = 2
       end
-      node.vm.provision "shell", inline: "sudo apt-get update"
+      #node.vm.provision "shell", inline: "sudo apt-get update"
       node.vm.provision "docker"
       node.vm.provision "shell", inline: @initManager, args: [ "#{NUM_OF_MANAGERS}" , "192.168.50.#{99+mgrNumber}", "#{mgrNumber}" ]
     end
@@ -93,7 +92,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         v.memory = MEMORY
         v.cpus = 2
       end
-      node.vm.provision "shell", inline: "sudo apt-get update"
+      #node.vm.provision "shell", inline: "sudo apt-get update"
       node.vm.provision "docker"
       node.vm.provision "shell", inline: @initWorker
 

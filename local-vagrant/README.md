@@ -15,16 +15,20 @@ Run with default options (1 manager, 2 workers).
 $ vagrant up
 ```
 
-This will provision 1 manager, 2 workers and deploy, initialize a docker swarm and deploy the services as defined in `docker-stack.yml`.
+This will 
+- provision 2 managers, 
+- 2 workers and 
+- deploy, initialize a docker swarm and 
+- deploy the services as defined in `docker-stack.yml`.
 
 ## Configuration
 
-Open the `Vagrantfile` and change the configuration options at the top of the file:
+Open the `config.yml` file to change the configuration options:
 
-- `NUM_OF_MANAGERS` - Number of managers to create (defaults to `1`).
+- `NUM_OF_MANAGERS` - Number of managers to create (defaults to `2`).
 - `NUM_OF_WORKERS` - Number of workers to create (defaults to `2`).
-- `MEMORY` - Allocated memory for each of the machines (defaults to `1024`)
-- `NUM_CPUS` - Allocated number of CPUs for each of the machines (defaults ot `2`)
+- `MEMORY` - Allocated memory for each of the machines (defaults to `2048`)
+- `NUM_CPUS` - Allocated number of CPUs for each of the machines (defaults to `2`)
 
 Save the file and run
 
