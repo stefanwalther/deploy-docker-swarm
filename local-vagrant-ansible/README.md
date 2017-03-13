@@ -37,3 +37,5 @@ $ sh deploy.sh
 Some articles which inspired this work.
 
 - [Vagrant Docker Swarm](http://jamesdmorgan.github.io/2016/docker-swarm/)
+- https://github.com/denverdino/docker-swarm-mode-vagrant/blob/master/Vagrantfile
+- https://github.com/mrlesmithjr/vagrant-ansible-docker-swarm
