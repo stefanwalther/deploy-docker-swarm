@@ -16,27 +16,39 @@ DO_ACCESS_TOKEN=ENV['DO_TOKEN']
 # -- Internal variables
 VAGRANTFILE_API_VERSION = "2"
 
+
 # -- Install the required plugins
-required_plugins = %w( vagrant-digitalocean vagrant-host-shell vagrant-vbguest vagrant-triggers )
-required_plugins.each do |plugin|
-  system "vagrant plugin install #{plugin}" unless Vagrant.has_plugin? plugin
-end
+require File.dirname(__FILE__)+"/lib/dependency_manager"
+check_plugins ["vagrant-digitalocean"]
 
 @initManager = <<EOD
-echo initManager Arguments: $*
-local currManager=$3
+echo initManager arguments: $*
 # Todo: We have an issue here, if re-creating the machines, then the old token will be re-used, which is wrong ...
-if [ ! -d "/vagrant/.vagrant/swarm-token" ]; then
-    mkdir /vagrant/.vagrant/swarm-token
-    chmod 777 /vagrant/.vagrant/swarm-token
+sleep 60
+if [ "$2" -eq "1" ]; then
 
-    docker swarm init --advertise-addr eth1:2377
-    docker swarm join-token -q manager > /vagrant/.vagrant/swarm-token/manager
-    docker swarm join-token -q worker > /vagrant/.vagrant/swarm-token/worker
+    SWARM_MANAGER_IP=$(ifconfig eth1 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+
+    mkdir -p /vagrant/.vagrant/swarm-token
+    ls -a /vagrant
+    ls -a /vagrant/.vagrant
+    ls -a /vagrant/.vagrant/swarm-token
+
+    chmod 777 /vagrant/.vagrant/swarm-token
+    echo $SWARM_MANAGER_IP > /vagrant/.vagrant/swarm-manager-ip
+    echo "SWARM_MANAGER_IP: $SWARM_MANAGER_IP"
+
+
+    #docker swarm init --advertise-addr eth1:2377
+    #docker swarm join-token -q manager > /vagrant/.vagrant/swarm-token/manager
+    #docker swarm join-token -q worker > /vagrant/.vagrant/swarm-token/worker
 else
-    docker swarm join \
-      --token `cat /vagrant/.vagrant/swarm-token/manager` \
-      192.168.50.100:2377
+    echo "Join swarm ...";
+    #echo "SWARM_MANAGER_IP: `cat /vagrant/.vagrant/swarm-manager-ip`";
+
+    #docker swarm join \
+    #  --token `cat /vagrant/.vagrant/swarm-token/manager` \
+    #  `cat /vagrant/.vagrant/swarm-manager-ip`:2377
 fi
 EOD
 
@@ -49,22 +61,44 @@ EOD
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box = "digital_ocean"
-  config.vm.box_url = "https://github.com/devopsgroup-io/vagrant-digitalocean/raw/master/box/digital_ocean.box"
-  config.vm.provision "docker"
+  #config.vm.provision "docker"
+  config.vm.synced_folder ".", "/vagrant", disabled: false
 
-  config.vm.define "droplet1" do |config|
-    config.vm.provider :digital_ocean do |provider, override|
+  # Digital Ocean Configuration
+  config.vm.provider :digital_ocean do |provider, override|
+    override.ssh.private_key_path = '~/.ssh/do_id_rsa'
+    provider.ssh_key_name = 'vagrant'
+    override.vm.box = 'digital_ocean'
+    override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
 
-      override.ssh.private_key_path = '~/.ssh/do_id_rsa'
-      provider.ssh_key_name = 'vagrant'
-
-      provider.token = DO_ACCESS_TOKEN
-      provider.image = DO_IMAGE
-      provider.region = DO_REGION
-      provider.size = DO_SIZE
-      provider.ipv6 = false
-    end
+    provider.token = DO_ACCESS_TOKEN
+    provider.image = DO_IMAGE
+    provider.region = DO_REGION
+    provider.size = DO_SIZE
+    provider.ipv6 = false
+    provider.private_networking = true
   end
+
+
+  (1..NUM_OF_MANAGERS).each do |mgrNumber|
+    config.vm.define "manager-#{mgrNumber}" do |node|
+
+      #node.vm.provision "shell", inline: "sudo apt-get update"
+      #node.vm.synced_folder ".", "/vagrant", disabled: false
+
+      # Todo: Does at the end of the day not work, since the rsync sync-folders are not available for the 2nd manager ...
+      # node.vm.provision "shell", inline: @initManager, args: [ "#{NUM_OF_MANAGERS}" , "#{mgrNumber}" ]
+
+    end
+  end # (end each)
+
+  (1..NUM_OF_WORKERS).each do |workerNumber|
+      config.vm.define "worker-#{workerNumber}" do |node|
+
+        #node.vm.provision "shell", inline: "sudo apt-get update"
+        #node.vm.synced_folder ".", "/vagrant", disabled: false
+
+      end
+    end # (end each)
 
 end

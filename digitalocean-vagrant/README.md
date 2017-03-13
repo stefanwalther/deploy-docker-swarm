@@ -1,5 +1,11 @@
 # DigitalOcean & Vagrant
 
+> Findings so far:
+> - Provisioning machines with Vagrant works perfectly and is easy to set up
+> - Initializing the docker-swarm within the same Vagrant file seems to be tricky (rsync shared folder is not available)
+>   - Initializing the swarm is not stable at all or does not work; currently is seems to be the best option to use Vagrant just for machine provisioning and then create a bash file to initiate the swarm and deploy the swarm stack?!
+
+
 ## Prerequisites
 
 - Create a DO account (get $10 for free using this [referral link](https://m.do.co/c/f8b1f8667c34))
@@ -29,8 +35,14 @@ Open the `Vagrantfile` and change the configuration options at the top of the fi
 
 To get the list of possible values for regions, images and sizes, follow the instructions [here](./../docs/digitalocean-tips-tricks.md).
 
+
+
 ## Todos
 
 - [x] Test with a clean account to describe the SSH dependencies/setup better
 
 ## Reference links
+
+## Examples
+
+- https://github.com/JustinCarmony/vagrant-docker-swarm-test
