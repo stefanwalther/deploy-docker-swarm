@@ -13,3 +13,23 @@ function swarm_deploy() {
 
 }
 
+function swarm_deploy_results() {
+
+  echo
+
+}
+
+# Todo: Not used, yet; include in the output
+function play_with_it() {
+
+  # Todo: Make "manager-1" generic
+  # Todo: Make it more generic in general to match "any" docker-stack.yml file (using labels)
+  local manager_ip="$(docker-machine ip manager-1)";
+
+  echo "Swarm visualizer: http://$manager_ip:8080"
+  echo "Voting app: http://$manager_ip:5000"
+  echo "Voting results: http://$manager_ip:5001"
+  echo "Portainer : http://$manager_ip:9000"
+
+}
+

@@ -56,10 +56,10 @@ All possible configurations are stored in `config.sh`:
 
 Open the UIs:
 
-Swarm visualizer: http://<local-ip>:8080
-Voting app: http://<local-ip>:5000
-Voting results: http://<local-ip>:5001
-Portainer : http://<local-ip>:9000
+Swarm visualizer: http://<local-ip>:8080  
+Voting app: http://<local-ip>:5000  
+Voting results: http://<local-ip>:5001  
+Portainer : http://<local-ip>:9000  
 
 ## Todos
 

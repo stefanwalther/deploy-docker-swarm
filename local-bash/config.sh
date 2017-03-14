@@ -13,5 +13,6 @@ MACHINE_NAME_WORKER_PREFIX=worker-
 NUM_MANAGERS=2
 NUM_WORKERS=3
 
+
 # Define machine
 

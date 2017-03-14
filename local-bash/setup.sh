@@ -30,3 +30,6 @@ create_workers
 # Initiate Docker swarm, both managers and workers
 init_managers
 init_workers
+
+# Deploy the swarm
+swarm_deploy

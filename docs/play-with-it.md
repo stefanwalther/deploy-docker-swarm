@@ -14,10 +14,10 @@ $ vagrant ssh <machine-name>
 For the pure bash examples just use:
 
 ```sh
-$ ssh <machine-name>
+$ docker-machine ssh <machine-name>
 
 # e.g.
-# ssh manager-1
+# docker-machine ssh manager-1
 ```
 
 ## Inspect
