@@ -17,8 +17,8 @@ echo "${LCYAN}CREATING MACHINE \"$machine_name\" ${RESTORE}"
 if [ ! -z "$(docker-machine ls | grep $machine_name)" ];
 then
   echo "${SPACE}${GRAY}${S_BULLET} Machine \"$machine_name\" already exists!${RESTORE}"
-  docker-machine stop $machine_name > /dev/null || true;
-  docker-machine rm -y $machine_name > /dev/null || true;
+  docker-machine stop $machine_name >/dev/null 2>&1 || true;
+  docker-machine rm -y $machine_name >/dev/null 2>&1 || true;
   echo "${SPACE}${GREEN}${S_CHECK} Machine \"$machine_name\" successfully removed.${RESTORE}"
 fi
 
