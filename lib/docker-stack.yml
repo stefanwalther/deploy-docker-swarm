@@ -18,6 +18,7 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
+
   db:
     image: postgres:9.4
     volumes:
@@ -27,6 +28,7 @@ services:
     deploy:
       placement:
         constraints: [node.role == manager]
+
   vote:
     image: dockersamples/examplevotingapp_vote:before
     ports:
@@ -41,6 +43,9 @@ services:
         parallelism: 2
       restart_policy:
         condition: on-failure
+    labels:
+      - "UI=Voting App"
+
   result:
     image: dockersamples/examplevotingapp_result:before
     ports:
@@ -56,6 +61,8 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
+    labels:
+      - "UI=Voting Result"
 
   worker:
     image: dockersamples/examplevotingapp_worker
@@ -84,6 +91,8 @@ services:
     deploy:
       placement:
         constraints: [node.role == manager]
+    labels:
+      - "UI=Swarm Visualizer"
 
 networks:
   frontend:
