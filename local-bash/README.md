@@ -54,12 +54,16 @@ All possible configurations are stored in `config.sh`:
 
 ## Play with it
 
-Open the UIs:
+Get the ip-address of the primary manager:
+```sh
+$ docker-machine ip manager-1
+```
 
-Swarm visualizer: http://<local-ip>:8080  
-Voting app: http://<local-ip>:5000  
-Voting results: http://<local-ip>:5001  
-Portainer : http://<local-ip>:9000  
+Open the UIs:
+Swarm visualizer: http://<manager-ip>:8080  
+Voting app: http://<manager-ip>:5000  
+Voting results: http://<manager-ip>:5001  
+Portainer : http://<manager-ip>:9000  
 
 ## Todos
 
