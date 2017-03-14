@@ -11,9 +11,9 @@ function recreate_machine() {
 local machine_name=$1
 local virtualbox_disk_size=${2:-10000}
 
+echo
 echo "${LCYAN}CREATING MACHINE \"$machine_name\" ${RESTORE}"
 
-# Todo: Handle error if this returns "Error"/"machine does not exist" => actually not sure where this is coming from?!
 if [ ! -z "$(docker-machine ls | grep $machine_name)" ];
 then
   echo "${SPACE}${GRAY}${S_BULLET} Machine \"$machine_name\" already exists!${RESTORE}"

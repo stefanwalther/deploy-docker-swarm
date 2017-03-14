@@ -29,6 +29,7 @@ function _init_leader() {
 
   LEADER_IP=$(docker-machine ip $leader);
   # Todo: What's about --listen-addr
+  # Todo: Why not just use eth1 ?
   docker-machine ssh $leader docker swarm init --advertise-addr $LEADER_IP > /dev/null;
 
   echo "${SPACE}${GREEN}${S_CHECK} Machine \"$leader\" has been successfully elevated to be the leader.${RESTORE}";
