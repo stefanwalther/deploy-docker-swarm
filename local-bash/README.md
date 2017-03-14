@@ -79,3 +79,5 @@ Some articles which inspired this work.
 
 - [Create a swarm cluster with Docker 1.12 swarm mode](http://lucjuggery.com/blog/?p=566) - Great article, thx a lot.
 - https://medium.com/towards-data-science/deploy-a-nodejs-microservices-to-a-docker-swarm-cluster-docker-from-zero-to-hero-464fa1369ea0#.wv1hrp285
+- https://github.com/aelsabbahy/miniswarm
+- https://github.com/microservices-demo/microservices-demo
