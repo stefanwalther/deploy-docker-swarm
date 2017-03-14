@@ -4,6 +4,9 @@
 
 function init_managers() {
 
+  echo
+  echo "${LCYAN}INITIALIZE THE SWARM${RESTORE}"
+
   _init_leader;
 #  echo "JOIN_TOKEN_MANAGER: $JOIN_TOKEN_MANAGER"
 #  echo "JOIN_TOKEN_WORKER: $JOIN_TOKEN_WORKER"
@@ -16,7 +19,11 @@ LEADER_IP=
 
 function _init_leader() {
 
-  local leader="$MACHINE_NAME_MANAGER$(expr 1)";
+  local leader="$MACHINE_NAME_MANAGER_PREFIX$(expr 1)";
+
+  echo
+  echo "${LCYAN}Initialize leader (\"$leader\")${RESTORE}"
+
 
   eval "$(docker-machine env $leader)";
 
@@ -32,19 +39,25 @@ function _init_leader() {
 }
 
 function _init_managers() {
-  echo "Doing some stuff with the managers"
-  for ((i=1; i<=$NUM_MANAGERS; i++)); do
-    echo "Do magic stuff with mangers: $i";
 
+  if (($NUM_MANAGERS > 1)); then
+    echo
+    echo "${LCYAN}Add managers${RESTORE}"
 
+    for ((i=2; i<=$NUM_MANAGERS; i++)); do
+      local manager="$MACHINE_NAME_MANAGER_PREFIX$i";
+      echo "Do magic stuff with mangers: $i";
 
-  done
+      docker-machine ssh $manager docker swarm join --token $JOIN_TOKEN_MANAGER $LEADER_IP:2377 > /dev/null;
+      echo "${SPACE}${GREEN}${S_CHECK} Machine \"$manager\" successfully joined the swarm as manager.${RESTORE}";
+    done
+  fi
 }
 
 function init_workers() {
 
   for i in $(seq 1 $NUM_WORKERS); do
-    _init_workers "$MACHINE_NAME_WORKER$i"
+    _init_workers "$MACHINE_NAME_WORKER_PREFIX$i"
   done
 
 }
@@ -52,12 +65,14 @@ function init_workers() {
 function _init_workers() {
   local worker=${1};
 
+  echo
+  echo "${LCYAN}Join swarm (\"$worker\")${RESTORE}"
   echo "${SPACE}${GRAY}${S_BULLET} Machine \"$worker\" to join the swarm as worker!${RESTORE}";
 
   local WORKER_IP=$(docker-machine ip $worker)
   eval "$(docker-machine env $worker)"
 
   docker-machine ssh $worker docker swarm join --token $JOIN_TOKEN_WORKER $LEADER_IP:2377 > /dev/null;
-  echo "${SPACE}${GREEN}${S_CHECK} Machine \"$w\" successfully joined the swarm.${RESTORE}";
+  echo "${SPACE}${GREEN}${S_CHECK} Machine \"$worker\" successfully joined the swarm.${RESTORE}";
 
 }

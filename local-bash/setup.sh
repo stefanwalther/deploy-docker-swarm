@@ -15,7 +15,7 @@ source $SCRIPT_DIR/lib/02-swarm-init.sh
 # Summary
 echo "${YELLOW}----------------------------------------------------${RESTORE}"
 echo "${YELLOW}LOCAL DEPLOYMENT SCRIPT FOR A DOCKER SWARM${RESTORE}"
-echo "${YELLOW}(using VirtualBox)${RESTORE}
+echo "${YELLOW}(using VirtualBox)${RESTORE}"
 echo "${GRAY}~${RESTORE}"
 echo "${GRAY}Summary:${RESTORE}"
 echo "${GRAY}  ${S_BULLET} Managers to create: $NUM_MANAGERS${RESTORE}"

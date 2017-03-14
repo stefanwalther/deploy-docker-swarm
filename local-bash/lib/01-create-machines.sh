@@ -36,12 +36,12 @@ echo "${SPACE}${GREEN}${S_CHECK} Machine \"$machine_name\" successfully started.
 
 function create_managers() {
   for i in $(seq 1 $NUM_MANAGERS); do
-    recreate_machine "$MACHINE_NAME_MANAGER$i"
+    recreate_machine "$MACHINE_NAME_MANAGER_PREFIX$i"
   done
 }
 
 function create_workers() {
   for i in $(seq 1 $NUM_WORKERS); do
-    recreate_machine "$MACHINE_NAME_WORKER$i"
+    recreate_machine "$MACHINE_NAME_WORKER_PREFIX$i"
   done
 }
