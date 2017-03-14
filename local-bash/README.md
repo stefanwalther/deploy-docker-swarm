@@ -59,7 +59,7 @@ Get the ip-address of the primary manager:
 $ docker-machine ip manager-1
 ```
 
-Open the UIs:
+**Open the UIs:**
 Swarm visualizer: http://<manager-ip>:8080  
 Voting app: http://<manager-ip>:5000  
 Voting results: http://<manager-ip>:5001  
