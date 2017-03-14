@@ -1,19 +1,25 @@
 {
   "name": "deploy-docker-swarm",
   "version": "0.1.0",
-  "description": "Deploy scripts for docker-swarm to different (cloud-)providers and using differrent tools such as bash, Vagrant, Ansible, Terraform.",
+  "description": "Collection of deploy scripts of a docker-swarm to different (local- & cloud-)providers, using differrent tools such as bash, Vagrant, Ansible, Terraform.",
   "keywords": [
+    "Ansible",
+    "VirtualBox",
+    "bash",
     "docker",
     "docker-swarm",
-    "bash",
     "vagrant",
-    "VirtualBox",
-    "Ansible"
+    "swarm-mode",
+    "swarm-deploy",
+    "DigitalOcean"
   ],
+  "license": "MIT",
+  "author": "Stefan Walther",
   "main": "index.js",
   "repository": "https://github.com/stefanwalther/deploy-docker-swarm",
-  "author": "Stefan Walther",
-  "license": "MIT",
+  "scripts": {
+    "docs": "verb"
+  },
   "verb": {
     "run": true,
     "toc": true,
@@ -34,8 +40,5 @@
       "verb",
       "verb-readme-generator"
     ]
-  },
-  "scripts": {
-    "docs": "verb"
   }
 }

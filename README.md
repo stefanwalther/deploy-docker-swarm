@@ -1,6 +1,6 @@
 # deploy-docker-swarm
 
-> Deploy scripts for docker-swarm to different (cloud-)providers and using differrent tools such as bash, Vagrant, Ansible, Terraform.
+> Collection of deploy scripts of a docker-swarm to different (local- & cloud-)providers, using differrent tools such as bash, Vagrant, Ansible, Terraform.
 
 ## TOC
 

@@ -2,6 +2,24 @@
 
 For all the commands below you have to be logged into one of the nodes.
 
+In case of using one of the Vagrant examples use:
+
+```sh
+$ vagrant ssh <machine-name>
+
+# e.g.
+# vagrant ssh manager-1
+```
+
+For the pure bash examples just use:
+
+```sh
+$ ssh <machine-name>
+
+# e.g.
+# ssh manager-1
+```
+
 ## Inspect
 
 List the nodes:
@@ -22,7 +40,6 @@ List the services populated:
 ```sh
 $ docker service ls
 ```
-
 
 
 ### Inspect the services

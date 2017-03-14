@@ -9,7 +9,7 @@
 
 If you have already installed all of the pre-requisites, then you are ready to go!
 
-Run with default options (1 manager, 2 workers).
+Run with default options (2 manager, 2 workers).
 
 ```sh
 $ vagrant up
@@ -19,7 +19,7 @@ This will
 - provision 2 managers, 
 - 2 workers and 
 - deploy, initialize a docker swarm and 
-- deploy the services as defined in `docker-stack.yml`.
+- deploy the services as defined in `./lib/docker-stack.yml`.
 
 ## Configuration
 
