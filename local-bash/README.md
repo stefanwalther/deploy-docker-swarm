@@ -71,6 +71,7 @@ Portainer : http://<manager-ip>:9000
 - [ ] Expose configuration to be arguments (or not?!)
 - [ ] If there is not default docker-machine, then we run into troubles.
 - [ ] Test on Windows
+- [ ] Use labels to get the UI-address of each service
 
 ## Reference links
 
