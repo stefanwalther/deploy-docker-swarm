@@ -1,0 +1,103 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# -------------------------------------------------------------------
+# Configuration options
+# -------------------------------------------------------------------
+NUM_OF_MANAGERS=2
+NUM_OF_WORKERS=2
+DO_REGION="fra1"
+DO_IMAGE="docker-16-04"
+DO_SIZE="1gb"
+DO_ACCESS_TOKEN=ENV['DO_TOKEN']
+# -------------------------------------------------------------------
+# (End configuration options)
+
+# -- Internal variables
+VAGRANTFILE_API_VERSION = "2"
+
+
+# -- Install the required plugins
+require File.dirname(__FILE__)+"/lib/dependency_manager"
+check_plugins ["vagrant-digitalocean"]
+
+@initManager = <<EOD
+echo initManager arguments: $*
+# Todo: We have an issue here, if re-creating the machines, then the old token will be re-used, which is wrong ...
+sleep 60
+if [ "$2" -eq "1" ]; then
+
+    SWARM_MANAGER_IP=$(ifconfig eth1 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+
+    mkdir -p /vagrant/.vagrant/swarm-token
+    ls -a /vagrant
+    ls -a /vagrant/.vagrant
+    ls -a /vagrant/.vagrant/swarm-token
+
+    chmod 777 /vagrant/.vagrant/swarm-token
+    echo $SWARM_MANAGER_IP > /vagrant/.vagrant/swarm-manager-ip
+    echo "SWARM_MANAGER_IP: $SWARM_MANAGER_IP"
+
+    #docker swarm init --advertise-addr eth1:2377
+    #docker swarm join-token -q manager > /vagrant/.vagrant/swarm-token/manager
+    #docker swarm join-token -q worker > /vagrant/.vagrant/swarm-token/worker
+else
+    echo "Join swarm ...";
+    #echo "SWARM_MANAGER_IP: `cat /vagrant/.vagrant/swarm-manager-ip`";
+
+    #docker swarm join \
+    #  --token `cat /vagrant/.vagrant/swarm-token/manager` \
+    #  `cat /vagrant/.vagrant/swarm-manager-ip`:2377
+fi
+EOD
+
+@initWorker = <<EOD
+docker swarm join \
+  --token `cat  /vagrant/.vagrant/swarm-token/worker` \
+  192.168.50.100:2377
+EOD
+
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  #config.vm.provision "docker"
+  config.vm.synced_folder ".", "/vagrant", disabled: false
+
+  # Digital Ocean Configuration
+  config.vm.provider :digital_ocean do |provider, override|
+    override.ssh.private_key_path = '~/.ssh/do_id_rsa'
+    provider.ssh_key_name = 'vagrant'
+    override.vm.box = 'digital_ocean'
+    override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+
+    provider.token = DO_ACCESS_TOKEN
+    provider.image = DO_IMAGE
+    provider.region = DO_REGION
+    provider.size = DO_SIZE
+    provider.ipv6 = false
+    provider.private_networking = true
+  end
+
+
+  (1..NUM_OF_MANAGERS).each do |mgrNumber|
+    config.vm.define "manager-#{mgrNumber}" do |node|
+
+      #node.vm.provision "shell", inline: "sudo apt-get update"
+      #node.vm.synced_folder ".", "/vagrant", disabled: false
+
+      # Todo: Does at the end of the day not work, since the rsync sync-folders are not available for the 2nd manager ...
+      # node.vm.provision "shell", inline: @initManager, args: [ "#{NUM_OF_MANAGERS}" , "#{mgrNumber}" ]
+
+    end
+  end # (end each)
+
+  (1..NUM_OF_WORKERS).each do |workerNumber|
+      config.vm.define "worker-#{workerNumber}" do |node|
+
+        #node.vm.provision "shell", inline: "sudo apt-get update"
+        #node.vm.synced_folder ".", "/vagrant", disabled: false
+
+      end
+    end # (end each)
+
+end
