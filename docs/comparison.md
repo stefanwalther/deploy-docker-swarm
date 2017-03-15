@@ -1,4 +1,4 @@
-#Comparison of the different approaches
+# Comparison of the different approaches
 
 Just a personal opinion having worked on all these examples.  
 (_Feel free to comment, add your findings or just disagree_)
@@ -22,11 +22,11 @@ Cons:
 Pros:
 
 - Platform agnostic
-- Many providers, such as AWS
+- Many providers, such as VirtualBox, AWS, Azure, DigitalOcean, etc.
 
 Cons:
 
-- 
+- Provisioning machines works perfectly in Vagrant, but the tool is just not built for deploying the swarm at the same time.
 
 ## Vagrant/Ansible
 
