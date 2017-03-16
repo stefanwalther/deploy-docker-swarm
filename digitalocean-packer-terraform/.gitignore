@@ -1,2 +1,5 @@
 packer-ubuntu-docker.log
 graph.png
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.tfstate.lock.info
