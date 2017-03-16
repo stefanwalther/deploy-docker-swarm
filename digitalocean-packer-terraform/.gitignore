@@ -3,3 +3,7 @@ graph.png
 terraform.tfstate
 terraform.tfstate.backup
 .terraform.tfstate.lock.info
+
+# Cert
+do-packer-terraform
+do-packer-terraform.pub
