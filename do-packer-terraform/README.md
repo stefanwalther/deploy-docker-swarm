@@ -98,6 +98,7 @@ $ terraform destroy -force
 - [ ] Store certs in a sub-folder
 - [ ] Store logs in a sub-folder
 - [ ] Store terraform logs in a sub-folder
+- [ ] Destroy snapshots created
 
 
 ## Reference links:
