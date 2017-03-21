@@ -1,6 +1,6 @@
 resource "digitalocean_ssh_key" "docker" {
   name = "do-packer-terraform"
-  public_key = "${file("./.ssh/do-packer-terraform.pub")}"
+  public_key = "${file("do-packer-terraform.pub")}"
 }
 
 
