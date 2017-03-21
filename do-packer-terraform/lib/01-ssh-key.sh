@@ -5,5 +5,6 @@ function gen_key() {
   # -f - file name
   # -N - passphrase
   # -o - overwrite
-  ssh-keygen -t rsa -f ./do-packer-terraform -N -o ''
+  mkdir -p ./.ssh/
+  echo -e 'y\n'|ssh-keygen -q -t rsa -f ./.ssh/do-packer-terraform -o -N '' 1>/dev/null
 }

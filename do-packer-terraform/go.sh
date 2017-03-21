@@ -10,8 +10,11 @@ source $SCRIPT_DIR/lib/02-packer.sh
 # Generate the keys
 gen_key
 
+
 # Create the snapshot on DO
 pack
+
+exit 1;
 
 
 export TF_VAR_swarm_snapshot_id=$(grep 'artifact,0,id' packer-ubuntu-docker.log | cut -d, -f6 | cut -d: -f2);

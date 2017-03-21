@@ -10,7 +10,7 @@ resource "digitalocean_droplet" "swarm-manager" {
   ]
   connection {
     user = "root"
-    private_key = "${file("do-packer-terraform")}"
+    private_key = "${file("./.ssh/do-packer-terraform")}"
     agent = false
   }
   provisioner "remote-exec" {
@@ -33,7 +33,7 @@ resource "digitalocean_droplet" "swarm-worker" {
   ]
   connection {
     user = "root"
-    private_key = "${file("do-packer-terraform")}"
+    private_key = "${file("./.ssh/do-packer-terraform")}"
     agent = false
   }
   provisioner "remote-exec" {
