@@ -14,7 +14,6 @@ gen_key
 # Create the snapshot on DO
 pack
 
-exit 1;
 
 
 export TF_VAR_swarm_snapshot_id=$(grep 'artifact,0,id' packer-ubuntu-docker.log | cut -d, -f6 | cut -d: -f2);
@@ -39,6 +38,9 @@ terraform apply \
           -var swarm_managers=1;
 
 terraform refresh;
+
+exit 1;
+
 
 # Todo: Does not really help, but forces a user-input which cannot be suppressed
 #ssh -i do-packer-terraform root@$(terraform output swarm_manager_1_public_ip) docker node ls;
