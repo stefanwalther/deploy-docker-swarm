@@ -38,3 +38,6 @@ echo "==> Workers initialized";
 # Deploy the swarm
 swarm_deploy
 echo "==> Swarm deployed";
+echo ""
+
+play_with_it

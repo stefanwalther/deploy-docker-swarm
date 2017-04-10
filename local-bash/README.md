@@ -102,6 +102,16 @@ Voting app: http://<manager-ip>:5000
 Voting results: http://<manager-ip>:5001  
 [Portainer](http://portainer.io/): http://<manager-ip>:9000    
 
+## Some screenshots
+
+### Deploy/Update the Stack
+
+![Visualizer](./images/deploy.png)
+
+### Visualizer
+
+![Visualizer](./images/visualizer.png)
+
 ## Todos
 
 - [ ] Security setup, TSL
