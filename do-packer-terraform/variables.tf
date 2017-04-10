@@ -8,7 +8,6 @@ variable "swarm_worker_token" {
 # Todo: Make this dynamic
 variable "swarm_snapshot_id" {
   default = "$TF_VAR_swarm_snapshot_id"
-//  default = ""
 }
 variable "swarm_manager_ip" {
   default = ""

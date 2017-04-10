@@ -34,6 +34,8 @@ I am by no means an expert in this area. Working on the different scenarios prim
 - Local deployment using the Docker-on-docker approach
 - Deployment to DigitalOcean using bash only
 - Deployment to DigitalOcean using Vagrant only
+- Deployment to DigitalOcean using Vagrant & bash
+- [Deployment to DigitalOcean using Packer & Terraform](./do-packer-terraform)
 - Deployment to DigitalOcean using Vagrant/Ansible
 - Using rancher to deploy locally (?)
 - Using rancher to deploy to DigitalOcean

@@ -5,4 +5,5 @@ terraform.tfstate.backup
 .terraform.tfstate.lock.info
 
 # Cert
-/.ssh
+do-packer-terraform
+do-packer-terraform.pub
