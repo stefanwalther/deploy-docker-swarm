@@ -11,6 +11,7 @@ source $SCRIPT_DIR/lib/constants.sh
 source $SCRIPT_DIR/config.sh
 source $SCRIPT_DIR/lib/01-create-machines.sh
 source $SCRIPT_DIR/lib/02-swarm-init.sh
+source $SCRIPT_DIR/lib/03-swarm-deploy.sh
 
 # Summary
 echo "${YELLOW}----------------------------------------------------${RESTORE}"
@@ -26,10 +27,14 @@ echo ""
 # Create the machines
 create_managers
 create_workers
+echo "==> Machines created";
 
 # Initiate Docker swarm, both managers and workers
 init_managers
+echo "==> Managers initialized";
 init_workers
+echo "==> Workers initialized";
 
 # Deploy the swarm
 swarm_deploy
+echo "==> Swarm deployed";
