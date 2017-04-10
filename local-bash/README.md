@@ -97,18 +97,20 @@ $ docker-machine ip manager-1
 ```
 
 **Open the UIs:**
-Swarm visualizer: http://<manager-ip>:8080  
+[Swarm visualizer](https://hub.docker.com/r/dockersamples/visualizer/): http://<manager-ip>:8080  
 Voting app: http://<manager-ip>:5000  
 Voting results: http://<manager-ip>:5001  
-Portainer : http://<manager-ip>:9000  
+[Portainer](http://portainer.io/): http://<manager-ip>:9000    
 
 ## Todos
 
-- [ ] Security setup, SSL generation
+- [ ] Security setup, TSL
 - [ ] Expose configuration to be arguments (or not?!)
 - [ ] If there is not default docker-machine, then we run into troubles.
 - [ ] Test on Windows
-- [ ] Use labels to get the UI-address of each service
+- [ ] Use labels to get the UI-address of each service (nice to have, just an idea)
+- [ ] Message that 'machine-x' already exists is wrong
+- [ ] Use newer version of swarm-visualizer
 
 ## Reference links
 
