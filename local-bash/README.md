@@ -15,22 +15,33 @@ _Note:_ The scripts are only tested on OSX, testing on Windows needs to be done.
 
 ## Run
 
-### Setup the environment
+### Provision the environment
 
 ```sh
-$ sh setup.sh
+$ sh provision.sh
 ```
 
-Result:
-- You have now several machines in your VirtualBox.
-- A swarm has been initialized
+Result:  
 
-Caveats:
+- You have now several machines in your VirtualBox (as defined in `config.sh`).
+- Have a look into VirtualBox to double-check if the newly created machines are there.
+
+Caveats:  
+
 - If a machine already exists with the same name (e.g. `manager-1`), then the setup-script will delete the existing one and create a new one.
+
+### Create the Docker Swarm
+
+Based on the previously created machines, now let's create a Docker swarm:
+
+```sh
+$ sh swarm-init.sh
+```
+
 
 ### Deploy a compose file
 
-Deploy the swarm as defined in `docker-stack.yml`
+Deploy the swarm as defined in `./../lib/docker-stack.yml`
 
 ```sh
 $ sh deploy.sh
@@ -44,12 +55,38 @@ $ sh deploy.sh -f ./docker-stack.modified.yml
 
 _Note: _docker-stack.modified.yml is not part of this project, just create it yourself ;-)_
 
+### Destroy the environment
+
+To destroy the entire - previously created - environment, run
+
+```sh
+$ sh destroy.sh
+```
+
+This destroys all machines on VirtualBox, all managers and all workers.
+
+### All Together
+
+Do run the following above described tasks
+
+```sh
+$ sh all.sh
+```
+
+This will:
+
+- Provision the environment
+- Create the Docker swarm
+- Deploy the Docker stack
+
 ## Configuration
 
 All possible configurations are stored in `config.sh`:
 
-- `NUM_MANAGERS` - Amount of managers to provision.
-- `NUM_WORKERS` - Amount of workers to provision.
+- `NUM_MANAGERS` - Amount of managers to provision (defaults to `3`).
+- `NUM_WORKERS` - Amount of workers to provision (default to `3`).
+- `MACHINE_NAME_MANAGER_PREFIX` - Prefix for managers (defaults to `manager-`).
+- `MACHINE_NAME_WORKER_PREFIX` - Prefix for managers (defaults to `worker-`).
 
 
 ## Play with it
