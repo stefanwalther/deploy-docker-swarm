@@ -9,25 +9,26 @@
 
 If you have already installed all of the pre-requisites, then you are ready to go!
 
-Run with default options (2 manager, 2 workers).
+Run with default options (1 manager, 3 workers).
 
 ```sh
 $ vagrant up
 ```
 
 This will 
-- provision 2 managers, 
-- 2 workers and 
+
+- provision 1 manager, 
+- 3 workers and 
 - deploy, initialize a docker swarm and 
-- deploy the services as defined in `./lib/docker-stack.yml`.
+- deploy the services as defined in `.docker-stack.yml`.
 
 ## Configuration
 
 Open the `config.yml` file to change the configuration options:
 
-- `NUM_OF_MANAGERS` - Number of managers to create (defaults to `2`).
-- `NUM_OF_WORKERS` - Number of workers to create (defaults to `2`).
-- `MEMORY` - Allocated memory for each of the machines (defaults to `2048`)
+- `NUM_OF_MANAGERS` - Number of managers to create (defaults to `1`).
+- `NUM_OF_WORKERS` - Number of workers to create (defaults to `3`).
+- `MEMORY` - Allocated memory for each of the machines (defaults to `1024`)
 - `NUM_CPUS` - Allocated number of CPUs for each of the machines (defaults to `2`)
 
 Save the file and run
@@ -67,15 +68,25 @@ If you want to see how long it takes to set up your environment, prepend the `va
 $ time vagrant up
 ```
 
+## Screenshots
+
+### Creation Process
+
+![vagrant-up](./images/vagrant-up.png)
+
+
 ## Todos
 
-- [ ] Security setup, SSL generation
+- [ ] Security setup, TSL
 - [x] Automatically install the vagrant plugins without `vagrant-plugins.sh`
 - [ ] Check which OS to use
 - [ ] Make sure that all configurations are used
 - [ ] Investigate how to run some test-scripts at the end
 - [ ] Enable experimental docker service logs (see https://sreeninet.wordpress.com/2017/01/27/docker-1-13-experimental-features/)
 - [ ] Potential improvement to use a YML to share the configuration: http://blog.scottlowe.org/2016/01/14/improved-way-yaml-vagrant/
+- [ ] Make IP-addresses dynamic
+- [ ] Use the same docker-stack.yml file as in the other examples
+- [ ] Echo a nice summary of what has been set-up
 
 ## Reference links
 
