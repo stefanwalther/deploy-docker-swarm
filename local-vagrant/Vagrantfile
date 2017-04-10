@@ -92,7 +92,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.provider "virtualbox" do |v|
         v.memory = MEMORY
         v.cpus = 2
-        v.name = "manager-#{workerNumber}"
+        v.name = "worker-#{workerNumber}"
       end
       #node.vm.provision "shell", inline: "sudo apt-get update"
       node.vm.provision "docker"
