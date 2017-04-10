@@ -41,7 +41,7 @@ I am by no means an expert in this area. Working on the different scenarios prim
 - Using rancher to deploy to DigitalOcean
 - Deployment to AWS using Vagrant only
 
-_Note:_ Scenarios not being linked to a solution are not started/finished, yet.
+_Note:_ Scenarios not being linked to a solution are not started, finished, or just do not work, yet.
 
 ## Install
 
