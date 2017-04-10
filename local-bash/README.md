@@ -83,7 +83,7 @@ This will:
 
 All possible configurations are stored in `config.sh`:
 
-- `NUM_MANAGERS` - Amount of managers to provision (defaults to `3`).
+- `NUM_MANAGERS` - Amount of managers to provision (defaults to `1`).
 - `NUM_WORKERS` - Amount of workers to provision (default to `3`).
 - `MACHINE_NAME_MANAGER_PREFIX` - Prefix for managers (defaults to `manager-`).
 - `MACHINE_NAME_WORKER_PREFIX` - Prefix for managers (defaults to `worker-`).

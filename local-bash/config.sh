@@ -11,4 +11,4 @@ MACHINE_NAME_WORKER_PREFIX=worker-
 
 # Define the amount of managers and workers
 NUM_MANAGERS=1
-NUM_WORKERS=2
+NUM_WORKERS=3
