@@ -104,6 +104,10 @@ Voting results: http://<manager-ip>:5001
 
 ## Some screenshots
 
+### Provision Machines
+
+![Visualizer](./images/provision.png)
+
 ### Deploy/Update the Stack
 
 ![Visualizer](./images/deploy.png)
@@ -130,6 +134,7 @@ Voting results: http://<manager-ip>:5001
 - [ ] Use labels to get the UI-address of each service (nice to have, just an idea)
 - [ ] Use newer version of swarm-visualizer
 - [ ] Output formatting on windows doesn't work
+- [ ] Add check if unable to talk to docker daemon (e.g. https://gist.github.com/ekristen/11254304)
 
 ## Reference links
 
