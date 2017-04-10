@@ -17,6 +17,10 @@ Cons:
 - Not necessarily platform agnostic (e.g. compared to the usage of Vagrant/Ansible)
 - Completely different implementation on local vs. a cloud-provider implementation
 
+Conclusion:
+
+- Good to learn, but probably not more than that.
+
 ## Vagrant
 
 Pros:
