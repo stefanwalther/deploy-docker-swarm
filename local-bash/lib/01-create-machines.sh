@@ -14,7 +14,8 @@ local virtualbox_disk_size=${2:-10000}
 echo
 echo "${LCYAN}CREATING MACHINE \"$machine_name\" ${RESTORE}"
 
-if [ ! -z "$(docker-machine ls | grep $machine_name)" ];
+local RUNNING=$(docker inspect --format="{{.State.Running}}" $machine_name 2> /dev/null)
+if [ $? -eq 2 ];
 then
   echo "${SPACE}${GRAY}${S_BULLET} Machine \"$machine_name\" already exists!${RESTORE}"
   docker-machine stop $machine_name >/dev/null 2>&1 || true;
@@ -35,13 +36,17 @@ echo "${SPACE}${GREEN}${S_CHECK} Machine \"$machine_name\" successfully started.
 }
 
 function create_managers() {
-  for i in $(seq 1 $NUM_MANAGERS); do
-    recreate_machine "$MACHINE_NAME_MANAGER_PREFIX$i"
-  done
+  if [ "$NUM_MANAGERS" -gt "0" ]; then
+    for i in $(seq 1 $NUM_MANAGERS); do
+      recreate_machine "$MACHINE_NAME_MANAGER_PREFIX$i"
+    done
+  fi
 }
 
 function create_workers() {
-  for i in $(seq 1 $NUM_WORKERS); do
-    recreate_machine "$MACHINE_NAME_WORKER_PREFIX$i"
-  done
+  if [ "$NUM_WORKERS" -gt "0" ]; then
+    for i in $(seq 1 $NUM_WORKERS); do
+      recreate_machine "$MACHINE_NAME_WORKER_PREFIX$i"
+    done
+  fi
 }

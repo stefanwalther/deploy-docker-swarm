@@ -112,6 +112,15 @@ Voting results: http://<manager-ip>:5001
 
 ![Visualizer](./images/visualizer.png)
 
+## Tested on
+
+- macOS Sierra, v10.12.14
+- Windows 10
+
+## Known limitations
+
+- Color coding in Windows' git bash does not work
+
 ## Todos
 
 - [ ] Security setup, TSL
@@ -119,8 +128,8 @@ Voting results: http://<manager-ip>:5001
 - [ ] If there is not default docker-machine, then we run into troubles.
 - [ ] Test on Windows
 - [ ] Use labels to get the UI-address of each service (nice to have, just an idea)
-- [ ] Message that 'machine-x' already exists is wrong
 - [ ] Use newer version of swarm-visualizer
+- [ ] Output formatting on windows doesn't work
 
 ## Reference links
 
@@ -130,3 +139,4 @@ Some articles which inspired this work.
 - https://medium.com/towards-data-science/deploy-a-nodejs-microservices-to-a-docker-swarm-cluster-docker-from-zero-to-hero-464fa1369ea0#.wv1hrp285
 - https://github.com/aelsabbahy/miniswarm
 - https://github.com/microservices-demo/microservices-demo
+- https://gist.github.com/ekristen/11254304
