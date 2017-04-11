@@ -28,7 +28,7 @@ if [ ! -d "/vagrant/.vagrant/swarm-token" ]; then
   mkdir /vagrant/.vagrant/swarm-token
   chmod 777 /vagrant/.vagrant/swarm-token
 
-  local swarm_manager_ip=$2
+  swarm_manager_ip=$2
 
   echo swarm_manager_ip > /vagrant/.vagrant/swarm_manager_ip
 
