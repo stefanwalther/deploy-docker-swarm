@@ -28,9 +28,11 @@ if [ ! -d "/vagrant/.vagrant/swarm-token" ]; then
   mkdir /vagrant/.vagrant/swarm-token
   chmod 777 /vagrant/.vagrant/swarm-token
 
-  echo $2 > /vagrant/.vagrant/swarm_manager_ip
+  local swarm_manager_ip=$2
 
-  docker swarm init --advertise-addr eth1:2377
+  echo swarm_manager_ip > /vagrant/.vagrant/swarm_manager_ip
+
+  docker swarm init --advertise-addr $swarm_manager_ip:2377
   docker swarm join-token -q manager > /vagrant/.vagrant/swarm-token/manager
   docker swarm join-token -q worker > /vagrant/.vagrant/swarm-token/worker
   #docker stack deploy --compose-file /vagrant/docker-stack.yml vote
@@ -69,6 +71,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.ssh.insert_key = false
+
+  # Prevent the "stdin: is not a tty" error
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+
 
   (1..NUM_OF_MANAGERS).each do |mgrNumber|
     config.vm.define "manager-#{mgrNumber}" do |node|
