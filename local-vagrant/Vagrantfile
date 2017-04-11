@@ -39,14 +39,14 @@ if [ ! -d "/vagrant/.vagrant/swarm-token" ]; then
 else
   docker swarm join \
     --token `cat /vagrant/.vagrant/swarm-token/manager` \
-    192.168.50.100:2377
+    `cat /vagrant/.vagrant/swarm-manager-ip`:2377
 fi
 SHELL
 
 @initWorker = <<SHELL
   docker swarm join \
     --token `cat  /vagrant/.vagrant/swarm-token/worker` \
-    192.168.50.100:2377
+    `cat /vagrant/.vagrant/swarm-manager-ip`:2377
 SHELL
 
 @deploySwarm = <<SHELL
