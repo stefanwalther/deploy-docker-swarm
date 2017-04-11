@@ -50,8 +50,13 @@ SHELL
 SHELL
 
 @deploySwarm = <<SHELL
+
+  cd /vagrant;
+  ls -la;
+
   docker stack deploy \
-    --compose-file /vagrant/docker-stack.yml vote
+    --compose-file /vagrant/docker-stack.yml \
+    vote;
 SHELL
 
 @cleanUp = <<SHELL
@@ -114,7 +119,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # Any hint welcome how to improve this ...
       if NUM_OF_WORKERS == workerNumber
         node.vm.provision :host_shell do |host_shell|
-          host_shell.inline = 'vagrant ssh manager-1 -- docker stack deploy --compose-file /vagrant/docker-stack.yml vote'
+          #host_shell.inline = 'vagrant ssh manager-1 -- docker stack deploy --compose-file=/vagrant/docker-stack.yml vote'
+          host_shell.inline = 'vagrant ssh manager-1 -- docker stack deploy --compose-file=/vagrant/docker-stack.yml vote'
         end
         #node.vm.provision "shell", inline: "ssh vagrant@manager-1 docker stack deploy --compose-file /vagrant/docker-stack.yml vote"
       end #end if
