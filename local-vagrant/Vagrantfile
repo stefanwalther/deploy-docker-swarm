@@ -30,7 +30,7 @@ if [ ! -d "/vagrant/.vagrant/swarm-token" ]; then
 
   swarm_manager_ip=$2
 
-  echo swarm_manager_ip > /vagrant/.vagrant/swarm_manager_ip
+  echo $swarm_manager_ip > /vagrant/.vagrant/swarm_manager_ip
 
   docker swarm init --advertise-addr $swarm_manager_ip:2377
   docker swarm join-token -q manager > /vagrant/.vagrant/swarm-token/manager
