@@ -2,8 +2,8 @@
 
 ## Prerequisites
 
-- [packer](http://packer.io)
-- [terraform](http://terraform.io) (version 0.9+)
+- [Packer](http://packer.io)
+- [Terraform](http://terraform.io) (version 0.9+)
 - Environment variable `DIGITALOCEAN_API_TOKEN` exposing the DigitalOcean API token
 
 ### Optional prerequisites

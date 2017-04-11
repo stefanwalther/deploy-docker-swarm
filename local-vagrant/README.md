@@ -68,6 +68,23 @@ If you want to see how long it takes to set up your environment, prepend the `va
 $ time vagrant up
 ```
 
+### Troubleshooting
+
+See [Debugging](https://www.vagrantup.com/docs/other/debugging.html) in the official Vagrant documentation.
+
+```sh
+$ vagrant up --debug
+```
+
+or 
+
+```shvagra
+$ vagrant up --debug &> vagrant.log
+
+# or on Windows
+# $ vagrant up --debug > vagrant.log 2>&1
+```
+
 ## Screenshots
 
 ### Creation Process
