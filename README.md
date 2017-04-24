@@ -10,7 +10,6 @@
   * [In progress](#in-progress)
   * [Investigating](#investigating)
   * [Omitted](#omitted)
-  * [Omitted scenarios:](#omitted-scenarios)
 - [Install](#install)
 - [Tools being used](#tools-being-used)
 - [Comparison of the different approaches used](#comparison-of-the-different-approaches-used)
@@ -36,10 +35,10 @@ I am by no means an expert in this area. Working on the different scenarios prim
 ### Fully working
 
 - [Local deployment to VirtualBox using bash only](./local-bash) (./local-bash)
+- [Local deployment to VirtualBox using Vagrant only](./local-vagrant) (./local-vagrant)
 
 ### In progress
 
-- [Local deployment to VirtualBox using Vagrant only](./local-vagrant) (./local-vagrant)
 - [Deployment to DigitalOcean using Packer & Terraform](./do-packer-terraform) (./do-packer-terraform)
 
 ### Investigating
@@ -60,8 +59,6 @@ I am by no means an expert in this area. Working on the different scenarios prim
 The scenarios above were started, but discontinued for various reasons.
 
 _Note:_ Scenarios not being linked to a solution are not started, finished, or just do not work, yet.
-
-### Omitted scenarios:
 
 ## Install
 
