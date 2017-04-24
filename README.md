@@ -44,7 +44,7 @@ I am by no means an expert in this area. Working on the different scenarios prim
 
 ### Investigating
 
-- Local deployment using the Docker-on-docker approach
+- Local deployment using the Docker-in-docker (DinD) approach
 - Deployment to DigitalOcean using bash only
 - Deployment to DigitalOcean using Vagrant & bash
 - Using rancher to deploy locally (?)
