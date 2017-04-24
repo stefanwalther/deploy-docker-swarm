@@ -65,7 +65,7 @@ $ vagrant ssh <machine-name>
 
 Destroy machine + resources created:
 ```sh
-$ vagrant destroy --force
+$ sh destroy.sh
 ```
 Stops the running machine Vagrant is managing and destroys all resources that were created during the machine creation process
 [Vagrant => destroy](https://www.vagrantup.com/docs/cli/destroy.html)
@@ -78,7 +78,7 @@ If you want to see how long it takes to set up your environment, prepend the `va
 $ time vagrant up
 ```
 
-### Troubleshooting
+### Troubleshooting & Debugging
 
 See [Debugging](https://www.vagrantup.com/docs/other/debugging.html) in the official Vagrant documentation.
 
@@ -94,6 +94,8 @@ $ vagrant up --debug &> vagrant.log
 # or on Windows
 # $ vagrant up --debug > vagrant.log 2>&1
 ```
+
+
 
 ## Screenshots
 
@@ -114,6 +116,8 @@ $ vagrant up --debug &> vagrant.log
 - [ ] Make IP-addresses dynamic
 - [ ] Use the same docker-stack.yml file as in the other examples
 - [ ] Echo a nice summary of what has been set-up
+- [ ] Would be nice to fully test the entire script
+- [ ] Take newest ubuntu release or think of a thinner OS
 
 ## Reference links
 

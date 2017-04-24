@@ -72,7 +72,16 @@ r0wadfsir91i  vote_visualizer.1  dockersamples/visualizer:stable               m
 t06c27xx664r  vote_result.1      dockersamples/examplevotingapp_result:before  manager-1  Running        Running 2 minutes ago      
 ```
 
+**List the services**
 
+```sh
+$ docker service ls
+```
+
+Result:
+```sh
+
+```
 
 
 ### Inspect the stack

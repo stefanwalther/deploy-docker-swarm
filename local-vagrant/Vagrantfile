@@ -49,6 +49,15 @@ SHELL
     `cat /vagrant/.vagrant/swarm-manager-ip`:2377
 SHELL
 
+@showResuls = <<SHELL
+
+  echo "PLAY WITH IT:";
+  echo "";
+  echo "";
+
+
+SHELL
+
 @deploySwarm = <<SHELL
 
   cd /vagrant;
