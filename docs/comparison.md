@@ -15,7 +15,7 @@ Cons:
 
 - Scripting work needed
 - Not necessarily platform agnostic (e.g. compared to the usage of Vagrant/Ansible)
-- Completely different implementation on local vs. a cloud-provider implementation
+- Pretty similar implementation on local vs. a cloud-provider implementation (if there is a docker-machine provider available)
 
 Conclusion:
 

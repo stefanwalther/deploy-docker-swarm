@@ -2,9 +2,9 @@
 
 ## Summary
 
-- Create a few machines in VirtualBox
+- Create a few machines in the local VirtualBox environment
 - Init a swarm (manager + worker nodes)
-- Deploys a docker-compose (v3) file
+- Deploy a docker-compose (v3) file
 
 ## Prerequisites
 
@@ -28,7 +28,7 @@ Result:
 
 Caveats:  
 
-- If a machine already exists with the same name (e.g. `manager-1`), then the setup-script will delete the existing one and create a new one.
+- If a machine already exists with the same name (e.g. `manager-1`), then the setup-script will delete the existing one and create a new one, without any further warning.
 
 ### Create the Docker Swarm
 
