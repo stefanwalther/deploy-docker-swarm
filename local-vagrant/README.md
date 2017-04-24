@@ -1,3 +1,13 @@
+# Deploy a swarm cluster on your local machine (using Vagrant)
+
+## Summary
+
+The following tasks will be performed:
+
+- Create a few machines on your local VirtualBox
+- Init a Docker swarm (manager + worker nodes)
+- Deploy a Docker stack (Docker compose v3; swarm mode)
+
 
 ## Prerequisites
 
@@ -17,17 +27,17 @@ $ vagrant up
 
 This will 
 
-- provision 1 manager, 
-- 3 workers and 
+- provision 3 managers, 
+- 2 workers and 
 - deploy, initialize a docker swarm and 
-- deploy the services as defined in `.docker-stack.yml`.
+- deploy the services as defined in `./../lib/docker-stack.yml`.
 
 ## Configuration
 
 Open the `config.yml` file to change the configuration options:
 
-- `NUM_OF_MANAGERS` - Number of managers to create (defaults to `1`).
-- `NUM_OF_WORKERS` - Number of workers to create (defaults to `3`).
+- `NUM_OF_MANAGERS` - Number of managers to create (defaults to `3`).
+- `NUM_OF_WORKERS` - Number of workers to create (defaults to `2`).
 - `MEMORY` - Allocated memory for each of the machines (defaults to `1024`)
 - `NUM_CPUS` - Allocated number of CPUs for each of the machines (defaults to `2`)
 

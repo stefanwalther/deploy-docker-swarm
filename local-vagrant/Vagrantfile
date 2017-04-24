@@ -116,6 +116,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.provision "shell", inline: @initWorker
 
       # Todo: Not really nice, but couldn't find any better way to provision one of the managers at "the end" of the process
+      # Todo: This ugly hack is actually the main reason why this solution is not really nice and a combination of
+      #   - vagrant & bash
+      #   - vagrant & ansible
+      # might be the better and more stable approach.
+
       # Any hint welcome how to improve this ...
       if NUM_OF_WORKERS == workerNumber
         node.vm.provision :host_shell do |host_shell|

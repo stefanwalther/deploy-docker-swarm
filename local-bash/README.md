@@ -2,9 +2,9 @@
 
 ## Summary
 
-- Create a few machines in the local VirtualBox environment
+- Create a few machines on your local VirtualBox
 - Init a swarm (manager + worker nodes)
-- Deploy a docker-compose (v3) file
+- Deploy a Docker stack (Docker compose v3; swarm mode)
 
 ## Prerequisites
 
