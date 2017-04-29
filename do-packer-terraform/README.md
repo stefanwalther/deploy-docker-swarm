@@ -4,7 +4,7 @@
 
 - [Packer](http://packer.io)
 - [Terraform](http://terraform.io) (version 0.9+)
-- Environment variable `DIGITALOCEAN_API_TOKEN` exposing the DigitalOcean API token
+- Environment variable `DIGITALOCEAN_API_TOKEN` exposing a DigitalOcean API token
 
 ### Optional prerequisites
 
@@ -33,6 +33,11 @@ Destroy the deployed plan (& cleanup):
 $ sh destroy.sh
 ```
 
+## Screenshots
+
+### Packer running
+
+![Packer running](./images/packer-running.png)
 
 ## Notes:
 

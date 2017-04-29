@@ -19,7 +19,7 @@ The following tasks will be performed:
 
 If you have already installed all of the pre-requisites, then you are ready to go!
 
-Run with default options (1 manager, 3 workers).
+Run with default options (3 managers, 2 workers).
 
 ```sh
 $ vagrant up
