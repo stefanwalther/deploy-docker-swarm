@@ -109,15 +109,17 @@ $ vagrant up --debug &> vagrant.log
 - [ ] Security setup, TSL
 - [x] Automatically install the vagrant plugins without `vagrant-plugins.sh`
 - [ ] Check which OS to use
+- [ ] Test Windows & MacOs
 - [ ] Make sure that all configurations are used
 - [ ] Investigate how to run some test-scripts at the end
 - [ ] Enable experimental docker service logs (see https://sreeninet.wordpress.com/2017/01/27/docker-1-13-experimental-features/)
 - [ ] Potential improvement to use a YML to share the configuration: http://blog.scottlowe.org/2016/01/14/improved-way-yaml-vagrant/
 - [ ] Make IP-addresses dynamic
-- [ ] Use the same docker-stack.yml file as in the other examples
+- [x] Use the same docker-stack.yml file as in the other examples
 - [ ] Echo a nice summary of what has been set-up
 - [ ] Would be nice to fully test the entire script
 - [ ] Take newest ubuntu release or think of a thinner OS
+- [ ] Expose a configuration option to define the docker-stack.yml file
 
 ## Reference links
 
