@@ -105,7 +105,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         v.cpus = 2
         v.name = "manager-#{mgrNumber}"
       end
-      #node.vm.provision "shell", inline: "sudo apt-get update"
+      node.vm.provision "shell", inline: "sudo apt-get update"
       node.vm.provision "docker"
       node.vm.provision "shell", inline: @initManager, args: [ "#{NUM_OF_MANAGERS}" , "192.168.50.#{99+mgrNumber}", "#{mgrNumber}" ]
     end
@@ -120,7 +120,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         v.cpus = 2
         v.name = "worker-#{workerNumber}"
       end
-      #node.vm.provision "shell", inline: "sudo apt-get update"
+      node.vm.provision "shell", inline: "sudo apt-get update"
       node.vm.provision "docker"
       node.vm.provision "shell", inline: @initWorker
 
@@ -133,8 +133,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # Any hint welcome how to improve this ...
       if NUM_OF_WORKERS == workerNumber
         node.vm.provision :host_shell do |host_shell|
-          #host_shell.inline = 'vagrant ssh manager-1 -- docker stack deploy --compose-file=/vagrant/docker-stack.yml vote'
-          host_shell.inline = 'vagrant ssh manager-1 -- docker stack deploy --compose-file=/vagrant/docker-stack.yml vote'
+          host_shell.inline = 'mkdir .tmp';
+          host_shell.inline = 'cp ./../lib/docker-stack.yml .tmp';
+          host_shell.inline = 'vagrant ssh manager-1 -- docker stack deploy --compose-file=/vagrant/.tmp/docker-stack.yml vote';
+          host_shell.inline = 'rm -rf .tmp';
         end
         #node.vm.provision "shell", inline: "ssh vagrant@manager-1 docker stack deploy --compose-file /vagrant/docker-stack.yml vote"
       end #end if
