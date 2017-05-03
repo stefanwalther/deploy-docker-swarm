@@ -1,5 +1,7 @@
 # deploy-docker-swarm
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/stefanwalther/deploy-docker-swarm.svg)](https://greenkeeper.io/)
+
 > Collection of deploy scripts of a docker-swarm to different (local- & cloud-)providers, using differrent tools such as bash, Vagrant, Ansible, Terraform.
 
 ## TOC
