@@ -2,3 +2,7 @@ NUM_OF_MANAGERS: 3
 NUM_OF_WORKERS: 2
 MEMORY: 1024
 NUM_CPUS: 2
+
+# Update the machines (sudo apt-get), takes more time
+UPDATE_MACHINES: true
+DEPLOY_STACK: true

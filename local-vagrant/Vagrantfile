@@ -9,6 +9,8 @@ NUM_OF_MANAGERS=settings['NUM_OF_MANAGERS']
 NUM_OF_WORKERS=settings['NUM_OF_WORKERS']
 MEMORY=settings['MEMORY']
 NUM_CPUS=settings['NUM_CPUS']
+DEPLOY_STACK=settings['DEPLOY_STACK']
+UPDATE_MACHINES=settings['UPDATE_MACHINES']
 
 # -- Install the required plugins
 require File.dirname(__FILE__)+"/lib/dependency_manager"
@@ -105,10 +107,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.network "private_network", ip: "192.168.50.#{99+mgrNumber}"
       node.vm.provider "virtualbox" do |v|
         v.memory = MEMORY
-        v.cpus = 2
+        v.cpus = NUM_CPUS
         v.name = "manager-#{mgrNumber}"
       end
-      node.vm.provision "shell", inline: "sudo apt-get update"
+
+      if (UPDATE_MACHINES)
+        node.vm.provision "shell", inline: "sudo apt-get update"
+      end #if
       node.vm.provision "docker"
       node.vm.provision "shell", inline: @initManager, args: [ "#{NUM_OF_MANAGERS}" , "192.168.50.#{99+mgrNumber}", "#{mgrNumber}" ]
     end
@@ -120,10 +125,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.network "private_network", ip: "192.168.50.#{149+workerNumber}"
       node.vm.provider "virtualbox" do |v|
         v.memory = MEMORY
-        v.cpus = 2
+        v.cpus = NUM_CPUS
         v.name = "worker-#{workerNumber}"
       end
-      node.vm.provision "shell", inline: "sudo apt-get update"
+      
+      if (UPDATE_MACHINES)
+        node.vm.provision "shell", inline: "sudo apt-get update"
+      end #if
+      
       node.vm.provision "docker"
       node.vm.provision "shell", inline: @initWorker
 
@@ -134,7 +143,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # might be the better and more stable approach.
 
       # Any hint welcome how to improve this ...
-      if NUM_OF_WORKERS == workerNumber
+      if (NUM_OF_WORKERS == workerNumber) && (DEPLOY_STACK)
         node.vm.provision :host_shell do |host_shell|
           host_shell.inline = 'mkdir .tmp';
           host_shell.inline = 'cp ./../lib/docker-stack.yml .tmp';
