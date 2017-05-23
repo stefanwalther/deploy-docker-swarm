@@ -88,6 +88,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # -- cleaning it here as a lot of negative side effects, that's why we keep it disabled for now.
   #config.vm.provision "shell", inline: @cleanUp
 
+  # -- General configurations
   config.vm.box = "ubuntu/trusty64"
   config.vm.provision "docker"
 
@@ -127,8 +128,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         node.vm.provision "shell", inline: "sudo apt-get update"
       end #if
 
-      node.vm.provision "docker"
-
       if (SWARM_INIT_MANAGERS)
         node.vm.provision "shell", inline: @initManager, args: [ "#{NUM_OF_MANAGERS}" , "192.168.50.#{99+mgrNumber}", "#{mgrNumber}" ]
       end #if
@@ -152,8 +151,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       if (UPDATE_MACHINES)
         node.vm.provision "shell", inline: "sudo apt-get update"
       end #if
-
-      node.vm.provision "docker"
 
       if (SWARM_INIT_MANAGERS) && (SWARM_INIT_WORKERS)
         node.vm.provision "shell", inline: @initWorker
