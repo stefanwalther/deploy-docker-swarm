@@ -8,6 +8,7 @@ settings = YAML.load_file 'config.yml'
 NUM_OF_MANAGERS=settings['NUM_OF_MANAGERS']
 NUM_OF_WORKERS=settings['NUM_OF_WORKERS']
 MEMORY=settings['MEMORY']
+VIDEO_MEMORY=settings['VIDEO_MEMORY']
 NUM_CPUS=settings['NUM_CPUS']
 DEPLOY_STACK=settings['DEPLOY_STACK']
 UPDATE_MACHINES=settings['UPDATE_MACHINES']
@@ -109,6 +110,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         v.memory = MEMORY
         v.cpus = NUM_CPUS
         v.name = "manager-#{mgrNumber}"
+        v.customize ["modifyvm", :id, "--vram", VIDEO_MEMORY]
       end
 
       if (UPDATE_MACHINES)
@@ -123,12 +125,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.define "worker-#{workerNumber}" do |node|
       node.vm.hostname = "worker-#{workerNumber}"
       node.vm.network "private_network", ip: "192.168.50.#{149+workerNumber}"
+      
       node.vm.provider "virtualbox" do |v|
         v.memory = MEMORY
         v.cpus = NUM_CPUS
         v.name = "worker-#{workerNumber}"
+        v.customize ["modifyvm", :id, "--vram", VIDEO_MEMORY]
       end
-      
+
       if (UPDATE_MACHINES)
         node.vm.provision "shell", inline: "sudo apt-get update"
       end #if

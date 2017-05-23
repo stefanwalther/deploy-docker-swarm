@@ -1,6 +1,7 @@
 NUM_OF_MANAGERS: 3
 NUM_OF_WORKERS: 2
 MEMORY: 1024
+VIDEO_MEMORY: 25
 NUM_CPUS: 2
 
 # Update the machines (sudo apt-get), takes more time
