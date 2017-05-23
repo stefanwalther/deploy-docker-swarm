@@ -10,8 +10,14 @@ NUM_OF_WORKERS=settings['NUM_OF_WORKERS']
 MEMORY=settings['MEMORY']
 VIDEO_MEMORY=settings['VIDEO_MEMORY']
 NUM_CPUS=settings['NUM_CPUS']
-DEPLOY_STACK=settings['DEPLOY_STACK']
 UPDATE_MACHINES=settings['UPDATE_MACHINES']
+
+VBGUEST_UPDATE=settings['VBGUEST_UPDATE']
+VBGUEST_NO_REMOTE=settings['VBGUEST_NO_REMOTE']
+
+SWARM_INIT_MANAGERS=settings['SWARM_INIT_MANAGERS']
+SWARM_INIT_WORKERS=settings['SWARM_INIT_WORKERS']
+SWARM_DEPLOY_STACK=settings['SWARM_DEPLOY_STACK']
 
 # -- Install the required plugins
 require File.dirname(__FILE__)+"/lib/dependency_manager"
@@ -78,6 +84,8 @@ SHELL
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
+  # -- cleanup Script, currently done by the destroy.sh file
+  # -- cleaning it here as a lot of negative side effects, that's why we keep it disabled for now.
   #config.vm.provision "shell", inline: @cleanUp
 
   config.vm.box = "ubuntu/trusty64"
@@ -91,14 +99,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # additions version when booting this machine
   # Note: as there is a bug in VirtualBox v5.1.20, disable it
   #   (more info: http://stackoverflow.com/questions/42074246/vagrant-error-unable-to-mount-virtualbox-shared-folders-guest-additions-vboxs)
-  config.vbguest.auto_update = false
+  config.vbguest.auto_update = VBGUEST_UPDATE
 
-  # do NOT download the iso file from a webserver
-  config.vbguest.no_remote = true
+  # -- do NOT download the iso file from a webserver
+  config.vbguest.no_remote = VBGUEST_NO_REMOTE
 
   config.ssh.insert_key = false
 
-  # Prevent the "stdin: is not a tty" error
+  # -- Prevent the "stdin: is not a tty" error
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
 
@@ -106,6 +114,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.define "manager-#{mgrNumber}" do |node|
       node.vm.hostname = "manager-#{mgrNumber}"
       node.vm.network "private_network", ip: "192.168.50.#{99+mgrNumber}"
+      node.vm.network "public_network", bridge: ["en1", "en6"]
+
       node.vm.provider "virtualbox" do |v|
         v.memory = MEMORY
         v.cpus = NUM_CPUS
@@ -116,8 +126,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       if (UPDATE_MACHINES)
         node.vm.provision "shell", inline: "sudo apt-get update"
       end #if
+
       node.vm.provision "docker"
-      node.vm.provision "shell", inline: @initManager, args: [ "#{NUM_OF_MANAGERS}" , "192.168.50.#{99+mgrNumber}", "#{mgrNumber}" ]
+
+      if (SWARM_INIT_MANAGERS)
+        node.vm.provision "shell", inline: @initManager, args: [ "#{NUM_OF_MANAGERS}" , "192.168.50.#{99+mgrNumber}", "#{mgrNumber}" ]
+      end #if
+
     end
   end
 
@@ -125,7 +140,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.define "worker-#{workerNumber}" do |node|
       node.vm.hostname = "worker-#{workerNumber}"
       node.vm.network "private_network", ip: "192.168.50.#{149+workerNumber}"
-      
+      node.vm.network "public_network", bridge: ["en1", "en6"]
+
       node.vm.provider "virtualbox" do |v|
         v.memory = MEMORY
         v.cpus = NUM_CPUS
@@ -136,9 +152,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       if (UPDATE_MACHINES)
         node.vm.provision "shell", inline: "sudo apt-get update"
       end #if
-      
+
       node.vm.provision "docker"
-      node.vm.provision "shell", inline: @initWorker
+
+      if (SWARM_INIT_MANAGERS) && (SWARM_INIT_WORKERS)
+        node.vm.provision "shell", inline: @initWorker
+      end #if
 
       # Todo: Not really nice, but couldn't find any better way to provision one of the managers at "the end" of the process
       # Todo: This ugly hack is actually the main reason why this solution is not really nice and a combination of
@@ -147,7 +166,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # might be the better and more stable approach.
 
       # Any hint welcome how to improve this ...
-      if (NUM_OF_WORKERS == workerNumber) && (DEPLOY_STACK)
+      if (NUM_OF_WORKERS == workerNumber) && (SWARM_DEPLOY_STACK)
         node.vm.provision :host_shell do |host_shell|
           host_shell.inline = 'mkdir .tmp';
           host_shell.inline = 'cp ./../lib/docker-stack.yml .tmp';
@@ -155,7 +174,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           host_shell.inline = 'rm -rf .tmp';
         end
         #node.vm.provision "shell", inline: "ssh vagrant@manager-1 docker stack deploy --compose-file /vagrant/docker-stack.yml vote"
-      end #end if
+      end #if
 
     end
   end
