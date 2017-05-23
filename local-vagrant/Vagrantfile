@@ -6,10 +6,14 @@ settings = YAML.load_file 'config.yml'
 
 # -- Getting configuration from config.ml
 NUM_OF_MANAGERS=settings['NUM_OF_MANAGERS']
+MEMORY_MANAGER=settings['MEMORY_MANAGER']
+NUM_CPUS_MANAGER=settings['NUM_CPUS_MANAGER']
+
 NUM_OF_WORKERS=settings['NUM_OF_WORKERS']
-MEMORY=settings['MEMORY']
+MEMORY_WORKER=settings['MEMORY_WORKER']
+NUM_CPUS_WORKER=settings['NUM_CPUS_WORKER']
+
 VIDEO_MEMORY=settings['VIDEO_MEMORY']
-NUM_CPUS=settings['NUM_CPUS']
 UPDATE_MACHINES=settings['UPDATE_MACHINES']
 
 VBGUEST_UPDATE=settings['VBGUEST_UPDATE']
@@ -118,8 +122,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.network "public_network", bridge: ["en1", "en6"]
 
       node.vm.provider "virtualbox" do |v|
-        v.memory = MEMORY
-        v.cpus = NUM_CPUS
+        v.memory = MEMORY_MANAGER
+        v.cpus = NUM_CPUS_MANAGER
         v.name = "manager-#{mgrNumber}"
         v.customize ["modifyvm", :id, "--vram", VIDEO_MEMORY]
       end
@@ -142,8 +146,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.network "public_network", bridge: ["en1", "en6"]
 
       node.vm.provider "virtualbox" do |v|
-        v.memory = MEMORY
-        v.cpus = NUM_CPUS
+        v.memory = MEMORY_WORKER
+        v.cpus = NUM_CPUS_WORKER
         v.name = "worker-#{workerNumber}"
         v.customize ["modifyvm", :id, "--vram", VIDEO_MEMORY]
       end
