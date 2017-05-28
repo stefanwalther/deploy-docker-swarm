@@ -67,6 +67,7 @@ Destroy machine + resources created:
 ```sh
 $ sh destroy.sh
 ```
+
 Stops the running machine Vagrant is managing and destroys all resources that were created during the machine creation process
 [Vagrant => destroy](https://www.vagrantup.com/docs/cli/destroy.html)
 

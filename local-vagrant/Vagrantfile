@@ -109,6 +109,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # -- do NOT download the iso file from a webserver
   config.vbguest.no_remote = VBGUEST_NO_REMOTE
 
+  config.ssh.username = "vagrant"
+  config.ssh.password = "vagrant"
   config.ssh.insert_key = false
 
   # -- Prevent the "stdin: is not a tty" error
