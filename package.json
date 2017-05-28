@@ -1,6 +1,6 @@
 {
   "name": "deploy-docker-swarm",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Collection of deploy scripts of a docker-swarm to different (local- & cloud-)providers, using differrent tools such as bash, Vagrant, Ansible, Terraform.",
   "keywords": [
     "Ansible",
