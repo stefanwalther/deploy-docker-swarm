@@ -1,6 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Todo: Use config plugin, which is much easier: https://github.com/maoueh/nugrant
 require 'yaml'
 settings = YAML.load_file 'config.yml'
 
@@ -62,12 +63,11 @@ SHELL
     `cat /vagrant/.vagrant/swarm-manager-ip`:2377
 SHELL
 
-@showResuls = <<SHELL
+@showResults = <<SHELL
 
   echo "PLAY WITH IT:";
   echo "";
   echo "";
-
 
 SHELL
 
@@ -109,13 +109,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # -- do NOT download the iso file from a webserver
   config.vbguest.no_remote = VBGUEST_NO_REMOTE
 
+  # -- Make it even more unsecure to be able to login locally
   config.ssh.username = "vagrant"
   config.ssh.password = "vagrant"
   config.ssh.insert_key = false
+  #config.ssh.port = 2222
 
   # -- Prevent the "stdin: is not a tty" error
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-
 
   (1..NUM_OF_MANAGERS).each do |mgrNumber|
     config.vm.define "manager-#{mgrNumber}" do |node|
@@ -123,6 +124,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.network "private_network", ip: "192.168.50.#{99+mgrNumber}"
       node.vm.network "public_network", bridge: ["en1", "en6"]
 
+      # -- Setting up port-forwardings if defined as such
+      if (settings['FORWARDED_PORTS'] && mgrNumber == 1)
+        settings['FORWARDED_PORTS'].each do |forwarded_port|
+          #puts "#{private_network}"
+          config.vm.network "forwarded_port", 
+            id: "#{forwarded_port['id']}",
+            guest: "#{forwarded_port['guest']}", 
+            host: "#{forwarded_port['host']}", 
+            host_ip: "#{forwarded_port['host_ip']}",
+            protocol: "#{forwarded_port['protocol'] || 'tcp'}",
+            auto_correct: forwarded_port['auto_correct'] || false,
+            disabled: forwarded_port['auto_correct'] || false
+        end #each
+      end #if
+      
       node.vm.provider "virtualbox" do |v|
         v.memory = MEMORY_MANAGER
         v.cpus = NUM_CPUS_MANAGER

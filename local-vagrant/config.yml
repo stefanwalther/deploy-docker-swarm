@@ -1,5 +1,5 @@
-NUM_OF_MANAGERS: 3
-NUM_OF_WORKERS: 2
+NUM_OF_MANAGERS: 1
+NUM_OF_WORKERS: 0
 MEMORY_MANAGER: 2048
 MEMORY_WORKER: 2048
 VIDEO_MEMORY: 25
@@ -18,3 +18,13 @@ SWARM_INIT_MANAGERS: true
 SWARM_INIT_WORKERS: true
 # Only applicable if there is more than 1 worker
 SWARM_DEPLOY_STACK: true
+
+# Definition of forwarded_ports, more: https://www.vagrantup.com/docs/networking/forwarded_ports.html
+FORWARDED_PORTS:
+  - id: ssh-external
+    host_ip: 192.168.178.66
+    guest: 22
+    host: 2223
+    protocol: tcp
+    disabled: false
+    auto_correct: true
