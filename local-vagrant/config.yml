@@ -19,7 +19,7 @@ SWARM_INIT_WORKERS: true
 # Only applicable if there is more than 1 worker
 SWARM_DEPLOY_STACK: true
 
-## Network settings
+## Network settings, name of the network device
 NETWORK_BRIDGE_DEFAULT: "Realtek PCIe GBE Family Controller #2"
 
 # Definition of forwarded_ports (see more: https://www.vagrantup.com/docs/networking/forwarded_ports.html)

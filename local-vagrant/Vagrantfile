@@ -19,6 +19,7 @@ end
 
 # Todo: Use config plugin, which is much easier: https://github.com/maoueh/nugrant
 require 'yaml'
+puts "Using config file #{configFile}"
 settings = YAML.load_file configFile
 
 # -- Getting configuration from config.ml
@@ -117,7 +118,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   if (settings['SYNCED_FOLDERS'] && settings['SYNCED_FOLDERS'].length > 0)
-    puts settings['SYNCED_FOLDERS']
+    # puts settings['SYNCED_FOLDERS']
     settings['SYNCED_FOLDERS'].each do |synced_folder|
       config.vm.synced_folder "#{synced_folder['src']}", "#{synced_folder['mount']}" 
     end #each
@@ -148,6 +149,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.network "public_network", bridge: settings['NETWORK_BRIDGE_DEFAULT'] || ["en1", "en6"]
 
       # -- Setting up port-forwardings if defined as such
+      #    (see https://github.com/mitchellh/vagrant/issues/3232 && https://oddessay.com/development-notes/changing-vagrants-default-ssh-port-to-prevent-collision-when-resuming-a-suspended-instance)
       if (settings['FORWARDED_PORTS'] && mgrNumber == 1)
         settings['FORWARDED_PORTS'].each do |forwarded_port|
           #puts "#{private_network}"
@@ -170,7 +172,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       end
 
       if (UPDATE_MACHINES)
-        node.vm.provision "shell", inline: "sudo apt-get update"
+        node.vm.provision "shell", inline: "sudo apt-get update && sudo apt-get autoremove"
       end #if
 
       if (SWARM_INIT_MANAGERS)
@@ -194,7 +196,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       end
 
       if (UPDATE_MACHINES)
-        node.vm.provision "shell", inline: "sudo apt-get update"
+        node.vm.provision "shell", inline: "sudo apt-get update && sudo apt-get autoremove"
       end #if
 
       if (SWARM_INIT_MANAGERS) && (SWARM_INIT_WORKERS)

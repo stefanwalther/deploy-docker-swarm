@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-vagrant -- destroy -f
+vagrant --config-file="config.prod.yml" -- destroy -f
 
 rm -rf ./.vagrant/
