@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-vagrant up --debug
+vagrant --config-file=config.dev.yml up --debug
