@@ -1,4 +1,4 @@
-NUM_OF_MANAGERS: 3
+NUM_OF_MANAGERS: 1
 NUM_OF_WORKERS: 0
 MEMORY_MANAGER: 2048
 MEMORY_WORKER: 2048
@@ -22,7 +22,7 @@ SWARM_DEPLOY_STACK: true
 ## Network settings
 NETWORK_BRIDGE_DEFAULT: "Realtek PCIe GBE Family Controller #2"
 
-# Definition of forwarded_ports, more: https://www.vagrantup.com/docs/networking/forwarded_ports.html
+# Definition of forwarded_ports (see more: https://www.vagrantup.com/docs/networking/forwarded_ports.html)
 FORWARDED_PORTS:
   - id: ssh-external
     host_ip: 192.168.178.66
@@ -31,3 +31,8 @@ FORWARDED_PORTS:
     protocol: tcp
     disabled: false
     auto_correct: true
+
+# Mount shared/sync-folders (see: https://www.vagrantup.com/docs/synced-folders/basic_usage.html)
+SYNCED_FOLDERS:
+  - src: "/private/intranet"
+    mount: "/mnt/intranet"

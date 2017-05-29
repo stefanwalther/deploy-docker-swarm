@@ -1,9 +1,25 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+require 'getoptlong'
+
+
+# Get the config-file from env variables
+opts = GetoptLong.new(
+  ['--config-file', GetoptLong::OPTIONAL_ARGUMENT]
+)
+
+configFile='config.yml'
+
+opts.each do |opt, arg|
+  case opt
+    when '--config-file'
+      configFile=arg
+  end
+end
 
 # Todo: Use config plugin, which is much easier: https://github.com/maoueh/nugrant
 require 'yaml'
-settings = YAML.load_file 'config.yml'
+settings = YAML.load_file configFile
 
 # -- Getting configuration from config.ml
 NUM_OF_MANAGERS=settings['NUM_OF_MANAGERS']
@@ -99,6 +115,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider 'virtualbox' do |v|
     v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
   end
+
+  if (settings['SYNCED_FOLDERS'] && settings['SYNCED_FOLDERS'].length > 0)
+    puts settings['SYNCED_FOLDERS']
+    settings['SYNCED_FOLDERS'].each do |synced_folder|
+      config.vm.synced_folder "#{synced_folder['src']}", "#{synced_folder['mount']}" 
+    end #each
+  end #if
 
   # set auto_update to false, if you do NOT want to check the correct
   # additions version when booting this machine

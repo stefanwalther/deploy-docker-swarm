@@ -22,7 +22,7 @@ If you have already installed all of the pre-requisites, then you are ready to g
 Run with default options (3 managers, 2 workers).
 
 ```sh
-$ vagrant up
+$ vagrant -- up
 ```
 
 This will 
@@ -44,7 +44,13 @@ Open the `config.yml` file to change the configuration options:
 Save the file and run
 
 ```sh
-$ vagrant up
+$ vagrant -- up
+```
+
+If you want to use a custom config.yml file, use:
+
+```sh
+$ vagrant --config-file=custom-config.yml -- up
 ```
 
 ## Play with it
@@ -84,16 +90,16 @@ $ time vagrant up
 See [Debugging](https://www.vagrantup.com/docs/other/debugging.html) in the official Vagrant documentation.
 
 ```sh
-$ vagrant up --debug
+$ vagrant -- up --debug
 ```
 
 or 
 
-```shvagra
-$ vagrant up --debug &> vagrant.log
+```sh
+$ vagrant -- up --debug &> vagrant.log
 
 # or on Windows
-# $ vagrant up --debug > vagrant.log 2>&1
+# $ vagrant -- up --debug > vagrant.log 2>&1
 ```
 
 
@@ -110,7 +116,7 @@ $ vagrant up --debug &> vagrant.log
 - [ ] Security setup, TSL
 - [x] Automatically install the vagrant plugins without `vagrant-plugins.sh`
 - [ ] Check which OS to use
-- [ ] Test Windows & MacOs
+- [x] Test Windows & MacOs
 - [ ] Make sure that all configurations are used
 - [ ] Investigate how to run some test-scripts at the end
 - [ ] Enable experimental docker service logs (see https://sreeninet.wordpress.com/2017/01/27/docker-1-13-experimental-features/)
@@ -121,6 +127,8 @@ $ vagrant up --debug &> vagrant.log
 - [ ] Would be nice to fully test the entire script
 - [ ] Take newest ubuntu release or think of a thinner OS
 - [ ] Expose a configuration option to define the docker-stack.yml file
+- [x] Bridged network
+- [x] Mount custom folders to the VirtualBox image
 
 ## Reference links
 
