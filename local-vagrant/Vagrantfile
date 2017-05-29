@@ -161,7 +161,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.define "worker-#{workerNumber}" do |node|
       node.vm.hostname = "worker-#{workerNumber}"
       node.vm.network "private_network", ip: "192.168.50.#{149+workerNumber}"
-      node.vm.network "public_network", bridge: ["en1", "en6"]
+      node.vm.network "public_network", bridge: settings['NETWORK_BRIDGE_DEFAULT'] || ["en1", "en6"]
 
       node.vm.provider "virtualbox" do |v|
         v.memory = MEMORY_WORKER
