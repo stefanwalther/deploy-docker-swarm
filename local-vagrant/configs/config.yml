@@ -50,7 +50,9 @@ SWARM_INIT_WORKERS: true
 SWARM_DEPLOY_STACK: true
 
 
-
+# ---------------------------------------------------------------------------
+# ADVANCED OPTIONS
+# ---------------------------------------------------------------------------
 
 
 # Definition of forwarded_ports (see more: https://www.vagrantup.com/docs/networking/forwarded_ports.html)

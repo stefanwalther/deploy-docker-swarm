@@ -63,6 +63,57 @@ If you want to use a custom config.yml file, use:
 $ vagrant --config-file=/configs/config.dev.yml up
 ```
 
+## Configuration Options
+
+### General Options
+
+| Configuration Option  | Type | String |
+| --- | --- | ---
+| `VM_BOX`                  | String, e.g. "ubuntu/trusty64"    | Box to use on VirtualBox.
+| `UPDATE_MACHINES`         | Boolean                           | Update the machines (sudo apt-get). Note: takes quite a lot of time
+| `VBGUEST_UPDATE`          | Boolean                           | Update VBGuest                                  
+| `VBGUEST_NO_REMOTE`       | Boolean                           | Prevent downloading VBGuest binaries from remote                                  
+| `NETWORK_BRIDGED`         | Boolean                           | Whether to add a bridged network.                                  
+| `NETWORK_BRIDGED_DEFAULT` | String                            | Default network device for network bridge.                                  
+| ``                        |                                   |                                   
+| ``                        |                                   |                                   
+
+### Multi-Machine Options
+
+| Configuration Option  | Type | String |
+| --- | --- | ---
+| `NUM_OF_MANAGERS`         | Integer, e.g. `3`                 | Number of managers to create.                                  
+| `NUM_OF_WORKERS`          | Integer, e.g. `2`                 | Number of workers to create.                                  
+| `MEMORY_MANAGER`          | Integer, e.g. `2048`              | Allocated memory for managers in MB.                                  
+| `MEMORY_WORKER`           | Integer, e.g. `2048`              | Allocated memory for workers in MB.                                  
+| `VIDEO_MEMORY`            | Integer, e.g. `25`                | Allocated video memory for both managers and workers.      
+| `NUM_CPUS_MANAGER`        | Integer                           | Number of allocated CPUs for managers.      
+| `NUM_CPUS_WORKER`         | Integer                           | Number of allocated CPUs for workers.
+
+### Docker Swarm Initialization
+
+| Configuration Option  | Type | String |
+| --- | --- | ---
+| `SWARM_INIT_MANAGERS`     | Boolean                           | Whether to initialize the swarm and add managers.                                  
+| `SWARM_INIT_WORKERS`      | Boolean                           | Whether to add workers to the swarm.                                   
+
+
+### Docker Swarm Stack Deployment
+
+| Configuration Option  | Type | String |
+| --- | --- | ---
+| `SWARM_DEPLOY_STACK`      | Boolean                           | Whether to deploy a stack to Docker swarm.                                  
+
+
+### Advanced: Custom Forwarded Ports
+
+Add forwarded ports to your machines.
+
+### Advanced: Synced Folders
+
+Add synced folders to your machine. 
+
+
 ## Play With It
 
 ### Vagrant Basics
