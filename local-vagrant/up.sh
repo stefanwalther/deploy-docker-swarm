@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-vagrant --config-file=config.yml -- up
+vagrant --config-file=./configs/config.yml up

@@ -2,9 +2,34 @@
 # vi: set ft=ruby :
 require 'getoptlong'
 
-
+# https://stackoverflow.com/questions/13065576/override-vagrant-configuration-settings-locally-per-dev
+# Solving the conflict with native Vagrant options: https://gist.github.com/ProxiBlue/0b977416f6c6d20c4f7bb562a9ae64ad
 # Get the config-file from env variables
 opts = GetoptLong.new(
+
+  # Native Vagrant options
+  [ '--force', '-f', GetoptLong::NO_ARGUMENT ],
+  [ '--provision', '-p', GetoptLong::NO_ARGUMENT ],
+  [ '--provision-with', GetoptLong::NO_ARGUMENT ],
+  [ '--provider', GetoptLong::OPTIONAL_ARGUMENT ],
+  [ '--help', '-h', GetoptLong::NO_ARGUMENT ],
+  [ '--check', GetoptLong::NO_ARGUMENT ],
+  [ '--logout', GetoptLong::NO_ARGUMENT ],
+  [ '--token', GetoptLong::NO_ARGUMENT ],
+  [ '--disable-http', GetoptLong::NO_ARGUMENT ],
+  [ '--http', GetoptLong::NO_ARGUMENT ],
+  [ '--https', GetoptLong::NO_ARGUMENT ],
+  [ '--ssh-no-password', GetoptLong::NO_ARGUMENT ],
+  [ '--ssh', GetoptLong::NO_ARGUMENT ],
+  [ '--ssh-port', GetoptLong::NO_ARGUMENT ],
+  [ '--ssh-once', GetoptLong::NO_ARGUMENT ],
+  [ '--host', GetoptLong::NO_ARGUMENT ],
+  [ '--entry-point', GetoptLong::NO_ARGUMENT ],
+  [ '--plugin-source', GetoptLong::NO_ARGUMENT ],
+  [ '--plugin-version', GetoptLong::NO_ARGUMENT ],
+  [ '--debug', GetoptLong::NO_ARGUMENT ],
+
+  # Custom options
   ['--config-file', GetoptLong::OPTIONAL_ARGUMENT]
 )
 
@@ -117,6 +142,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
   end
 
+  if (settings['SYNCED_FOLDERS'] && settings['SYNCED_FOLDERS'].length > 0)
+    # puts settings['SYNCED_FOLDERS']
+    settings['SYNCED_FOLDERS'].each do |synced_folder|
+      config.vm.synced_folder "#{synced_folder['src']}", "#{synced_folder['mount']}"
+    end #each
+  end #if
+
   # set auto_update to false, if you do NOT want to check the correct
   # additions version when booting this machine
   # Note: as there is a bug in VirtualBox v5.1.20, disable it
@@ -136,36 +168,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
   (1..NUM_OF_MANAGERS).each do |mgrNumber|
-    config.vm.define "manager-#{mgrNumber}" do |node|
-      node.vm.hostname = "manager-#{mgrNumber}"
+    MACHINE_NAME = "manager-#{mgrNumber}"
+    config.vm.define MACHINE_NAME do |node|
+      node.vm.hostname = MACHINE_NAME
       node.vm.network "private_network", ip: "192.168.50.#{99+mgrNumber}"
       node.vm.network "public_network", bridge: settings['NETWORK_BRIDGE_DEFAULT'] || ["en1", "en6"]
 
-      if (settings['SYNCED_FOLDERS'] && settings['SYNCED_FOLDERS'].length > 0)
-        # puts settings['SYNCED_FOLDERS']
-        settings['SYNCED_FOLDERS'].each do |synced_folder|
-          if synced_folder['vm'] == "manager-#{mgrNumber}"
-            config.vm.synced_folder "#{synced_folder['src']}", "#{synced_folder['mount']}" 
+      # -- Setting up port-forwardings if defined as such
+      #    (see https://github.com/mitchellh/vagrant/issues/3232 && https://oddessay.com/development-notes/changing-vagrants-default-ssh-port-to-prevent-collision-when-resuming-a-suspended-instance)
+      if (settings['FORWARDED_PORTS'])
+        settings['FORWARDED_PORTS'].each do |forwarded_port|
+          if forwarded_port['vm'] == MACHINE_NAME
+            puts "Forwarded ports for #{MACHINE_NAME}: #{forwarded_port}"
+            config.vm.network "forwarded_port",
+              id: "#{forwarded_port['id']}",
+              guest: "#{forwarded_port['guest']}",
+              host: "#{forwarded_port['host']}",
+              host_ip: "#{forwarded_port['host_ip']}",
+              protocol: "#{forwarded_port['protocol'] || 'tcp'}",
+              auto_correct: forwarded_port['auto_correct'] || false,
+              disabled: forwarded_port['auto_correct'] || false
           end #if
         end #each
       end #if
 
-      # -- Setting up port-forwardings if defined as such
-      #    (see https://github.com/mitchellh/vagrant/issues/3232 && https://oddessay.com/development-notes/changing-vagrants-default-ssh-port-to-prevent-collision-when-resuming-a-suspended-instance)
-      if (settings['FORWARDED_PORTS'] && mgrNumber == 1)
-        settings['FORWARDED_PORTS'].each do |forwarded_port|
-          #puts "#{private_network}"
-          config.vm.network "forwarded_port", 
-            id: "#{forwarded_port['id']}",
-            guest: "#{forwarded_port['guest']}", 
-            host: "#{forwarded_port['host']}", 
-            host_ip: "#{forwarded_port['host_ip']}",
-            protocol: "#{forwarded_port['protocol'] || 'tcp'}",
-            auto_correct: forwarded_port['auto_correct'] || false,
-            disabled: forwarded_port['auto_correct'] || false
-        end #each
-      end #if
-      
       node.vm.provider "virtualbox" do |v|
         v.memory = MEMORY_MANAGER
         v.cpus = NUM_CPUS_MANAGER

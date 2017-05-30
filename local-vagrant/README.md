@@ -2,9 +2,9 @@
 
 ## Summary
 
-The following tasks will be performed:
+The following tasks will be performed in this solution:
 
-- Create a few machines on your local VirtualBox
+- Create a configurable number of machines (managers & workers) on your local VirtualBox
 - Init a Docker swarm (manager + worker nodes)
 - Deploy a Docker stack (Docker compose v3; swarm mode)
 
@@ -33,6 +33,8 @@ This will
 - deploy the services as defined in `./../lib/docker-stack.yml`.
 
 ## Configuration
+
+All configuration
 
 Open the `config.yml` file to change the configuration options:
 
