@@ -19,52 +19,56 @@ The following tasks will be performed in this solution:
 
 If you have already installed all of the pre-requisites, then you are ready to go!
 
-Run with default options (3 managers, 2 workers).
+Run with default options (as defined in `./configs/config.yml`).
 
 ```sh
-$ vagrant -- up
+$ vagrant up
 ```
 
 This will 
 
-- provision 3 managers, 
+- Provision 3 managers, 
 - 2 workers and 
-- deploy, initialize a docker swarm and 
-- deploy the services as defined in `./../lib/docker-stack.yml`.
+- Deploy, initialize a docker swarm and 
+- Deploy the services as defined in `./../lib/docker-stack.yml`.
 
 ## Configuration
 
-All configuration
+All configuration is driven through configuration files.
+In the basic example above the default configuration file `./configs/config.yml` was used.
+
+You can either
+
+- change the default config file
+- or pass another one to the Vagrantfile
+
+### Changing the default configuration file
 
 Open the `config.yml` file to change the configuration options:
 
-- `NUM_OF_MANAGERS` - Number of managers to create (defaults to `3`).
-- `NUM_OF_WORKERS` - Number of workers to create (defaults to `2`).
-- `MEMORY` - Allocated memory for each of the machines (defaults to `1024`)
-- `NUM_CPUS` - Allocated number of CPUs for each of the machines (defaults to `2`)
+- `NUM_OF_MANAGERS` - Number of managers to create.
+- `NUM_OF_WORKERS` - Number of workers to create.
+- ... (more documentation on the configuration options can be found in the sample file `./configs/config.yml`)
 
 Save the file and run
 
 ```sh
 $ vagrant -- up
 ```
+### Use a custom configuration file
 
 If you want to use a custom config.yml file, use:
 
 ```sh
-$ vagrant --config-file=custom-config.yml -- up
+$ vagrant --config-file=/configs/config.dev.yml up
 ```
 
-## Play with it
+## Play With It
 
-Open the UIs:
-
-- Swarm visualizer: [http://192.168.50.100:8080](http://192.168.50.100:8080) 
-- Voting app: [http://192.168.50.100:5000](http://192.168.50.100:5000)
-- Voting results: [http://192.168.50.100:5001](http://192.168.50.100:5001)
-- [Portainer](http://portainer.io/) : [http://192.168.50.100:9000](http://192.168.50.100:9000)
+### Vagrant Basics
 
 ssh into a machine:
+
 ```sh
 $ vagrant ssh <machine-name>
 ```
@@ -72,12 +76,23 @@ $ vagrant ssh <machine-name>
 [Play with it](./docs/play-with-it.md)
 
 Destroy machine + resources created:
+
 ```sh
-$ sh destroy.sh
+$ sh destroy.sh --config-file=./configs/config.dev.yml
 ```
 
 Stops the running machine Vagrant is managing and destroys all resources that were created during the machine creation process
 [Vagrant => destroy](https://www.vagrantup.com/docs/cli/destroy.html)
+
+### Deployed Docker Swarm
+If you have deployed the sample stack (config option `SWARM_DEPLOY_STACK`), then you can start playing with the environment:
+
+Open the UIs:
+
+- Swarm visualizer: [http://192.168.50.100:8080](http://192.168.50.100:8080) 
+- Voting app: [http://192.168.50.100:5000](http://192.168.50.100:5000)
+- Voting results: [http://192.168.50.100:5001](http://192.168.50.100:5001)
+- [Portainer](http://portainer.io/) : [http://192.168.50.100:9000](http://192.168.50.100:9000)
 
 ## Tips & Tricks
 
@@ -92,26 +107,29 @@ $ time vagrant up
 See [Debugging](https://www.vagrantup.com/docs/other/debugging.html) in the official Vagrant documentation.
 
 ```sh
-$ vagrant -- up --debug
+$ vagrant --config-file=configs/config.dev.yml up --debug
 ```
 
 or 
 
 ```sh
-$ vagrant -- up --debug &> vagrant.log
+$ vagrant --config-file=configs/config.dev.yml up --debug &> vagrant.log
 
 # or on Windows
-# $ vagrant -- up --debug > vagrant.log 2>&1
+# $ vagrant --config-file=configs/config.dev.yml up --debug > vagrant.log 2>&1
 ```
 
 
 
 ## Screenshots
 
-### Creation Process
+### Provisioning Process
 
 ![vagrant-up](./images/vagrant-up.png)
 
+## Known Issues
+
+- Creating custom forwarded_ports does sometimes not work
 
 ## Todos
 
@@ -119,22 +137,26 @@ $ vagrant -- up --debug &> vagrant.log
 - [x] Automatically install the vagrant plugins without `vagrant-plugins.sh`
 - [ ] Check which OS to use
 - [x] Test Windows & MacOs
-- [ ] Make sure that all configurations are used
+- [x] Make sure that all configurations are used
 - [ ] Investigate how to run some test-scripts at the end
 - [ ] Enable experimental docker service logs (see https://sreeninet.wordpress.com/2017/01/27/docker-1-13-experimental-features/)
-- [ ] Potential improvement to use a YML to share the configuration: http://blog.scottlowe.org/2016/01/14/improved-way-yaml-vagrant/
+- [x] Potential improvement to use a YML to share the configuration
 - [ ] Make IP-addresses dynamic
 - [x] Use the same docker-stack.yml file as in the other examples
+- [ ] Make the docker-stack.yml file configurable
 - [ ] Echo a nice summary of what has been set-up
 - [ ] Would be nice to fully test the entire script
 - [ ] Take newest ubuntu release or think of a thinner OS
+- [x] Make VM-Box configurable
 - [ ] Expose a configuration option to define the docker-stack.yml file
 - [x] Bridged network
 - [x] Mount custom folders to the VirtualBox image
 
 ## Reference links
 
+Some articles which inspired this work.
+
 - [Docker swarm mode sample app](https://docs.docker.com/engine/getstarted-voting-app/) 
 - [Code sample docker swarm mode](https://github.com/eyal-lupu/vagrant-docker-swarm-mode/blob/master/Vagrantfile)
-- https://github.com/docker/docker/issues/31516
-- https://technology.amis.nl/2015/08/22/first-steps-with-provisioning-of-docker-containers-using-vagrant-as-provider/ and https://www.simonholywell.com/post/2016/02/intelligent-vagrant-and-ansible-files/
+- [Using YML config-files with Vagrant](http://blog.scottlowe.org/2016/01/14/improved-way-yaml-vagrant/)
+- [First steps with provisioning of Docker containers using Vagrant as provider](https://technology.amis.nl/2015/08/22/first-steps-with-provisioning-of-docker-containers-using-vagrant-as-provider/)
