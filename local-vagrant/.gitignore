@@ -1,4 +1,3 @@
 .tmp
 ssh.config
-config.dev.yml
-config.prod.yml
+configs/config.*.yml
