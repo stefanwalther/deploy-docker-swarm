@@ -117,13 +117,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.linked_clone = true if Vagrant::VERSION =~ /^1.8/
   end
 
-  if (settings['SYNCED_FOLDERS'] && settings['SYNCED_FOLDERS'].length > 0)
-    # puts settings['SYNCED_FOLDERS']
-    settings['SYNCED_FOLDERS'].each do |synced_folder|
-      config.vm.synced_folder "#{synced_folder['src']}", "#{synced_folder['mount']}" 
-    end #each
-  end #if
-
   # set auto_update to false, if you do NOT want to check the correct
   # additions version when booting this machine
   # Note: as there is a bug in VirtualBox v5.1.20, disable it
@@ -147,6 +140,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.hostname = "manager-#{mgrNumber}"
       node.vm.network "private_network", ip: "192.168.50.#{99+mgrNumber}"
       node.vm.network "public_network", bridge: settings['NETWORK_BRIDGE_DEFAULT'] || ["en1", "en6"]
+
+      if (settings['SYNCED_FOLDERS'] && settings['SYNCED_FOLDERS'].length > 0)
+        # puts settings['SYNCED_FOLDERS']
+        settings['SYNCED_FOLDERS'].each do |synced_folder|
+          if synced_folder['vm'] == "manager-#{mgrNumber}"
+            config.vm.synced_folder "#{synced_folder['src']}", "#{synced_folder['mount']}" 
+          end #if
+        end #each
+      end #if
 
       # -- Setting up port-forwardings if defined as such
       #    (see https://github.com/mitchellh/vagrant/issues/3232 && https://oddessay.com/development-notes/changing-vagrants-default-ssh-port-to-prevent-collision-when-resuming-a-suspended-instance)

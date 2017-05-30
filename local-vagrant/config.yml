@@ -31,6 +31,7 @@ FORWARDED_PORTS:
     protocol: tcp
     disabled: false
     auto_correct: true
+    vm: manager-1 
 
 # Mount shared/sync-folders (see: https://www.vagrantup.com/docs/synced-folders/basic_usage.html)
 SYNCED_FOLDERS:
