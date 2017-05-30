@@ -33,7 +33,7 @@ opts = GetoptLong.new(
   ['--config-file', GetoptLong::OPTIONAL_ARGUMENT]
 )
 
-configFile='config.yml'
+configFile='./configs/config.yml'
 
 opts.each do |opt, arg|
   case opt
@@ -73,10 +73,12 @@ check_plugins ["vagrant-host-shell", "vagrant-vbguest"]
 # -- Internal variables
 VAGRANTFILE_API_VERSION = "2"
 
+# -- Helper method to delete the swarm token
 @deleteTokens = <<SHELL
   rm -rf /vagrant/.vagrant/swarm-token
 SHELL
 
+# -- Initialize a manager
 @initManager = <<SHELL
 echo initManager Arguments: $*
 # Todo: @deleteTokens is the solutions, just have to trigger it here ...
@@ -99,12 +101,15 @@ else
 fi
 SHELL
 
+# -- Initialize a swarm worker
 @initWorker = <<SHELL
   docker swarm join \
     --token `cat  /vagrant/.vagrant/swarm-token/worker` \
     `cat /vagrant/.vagrant/swarm-manager-ip`:2377
 SHELL
 
+# -- Show some results
+# Todo: Not used, yet
 @showResults = <<SHELL
 
   echo "PLAY WITH IT:";
@@ -113,6 +118,7 @@ SHELL
 
 SHELL
 
+# -- Deploy a stack to docker swarm
 @deploySwarm = <<SHELL
 
   cd /vagrant;
@@ -123,6 +129,8 @@ SHELL
     vote;
 SHELL
 
+# -- Helper method to clean up
+# Todo: not used, yet or not anymore
 @cleanUp = <<SHELL
   rm -rf /vagrant/.vagrant/swarm-token;
   rm -rf /vagrant/.vagrant/swarm-manager-ip;
@@ -168,9 +176,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
   (1..NUM_OF_MANAGERS).each do |mgrNumber|
-    MACHINE_NAME = "manager-#{mgrNumber}"
-    config.vm.define MACHINE_NAME do |node|
-      node.vm.hostname = MACHINE_NAME
+    _MACHINE_NAME = "manager-#{mgrNumber}"
+    config.vm.define _MACHINE_NAME do |node|
+      node.vm.hostname = _MACHINE_NAME
       node.vm.network "private_network", ip: "192.168.50.#{99+mgrNumber}"
       node.vm.network "public_network", bridge: settings['NETWORK_BRIDGE_DEFAULT'] || ["en1", "en6"]
 
@@ -178,9 +186,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       #    (see https://github.com/mitchellh/vagrant/issues/3232 && https://oddessay.com/development-notes/changing-vagrants-default-ssh-port-to-prevent-collision-when-resuming-a-suspended-instance)
       if (settings['FORWARDED_PORTS'])
         settings['FORWARDED_PORTS'].each do |forwarded_port|
-          if forwarded_port['vm'] == MACHINE_NAME
-            puts "Forwarded ports for #{MACHINE_NAME}: #{forwarded_port}"
-            config.vm.network "forwarded_port",
+          if forwarded_port['vm'] == _MACHINE_NAME
+            # puts "Forwarded ports for #{MACHINE_NAME}: #{forwarded_port}"
+            node.vm.network "forwarded_port",
               id: "#{forwarded_port['id']}",
               guest: "#{forwarded_port['guest']}",
               host: "#{forwarded_port['host']}",
@@ -245,9 +253,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           host_shell.inline = 'vagrant ssh manager-1 -- docker stack deploy --compose-file=/vagrant/.tmp/docker-stack.yml vote';
           host_shell.inline = 'rm -rf .tmp';
         end
-        #node.vm.provision "shell", inline: "ssh vagrant@manager-1 docker stack deploy --compose-file /vagrant/docker-stack.yml vote"
       end #if
-
     end
   end
 
