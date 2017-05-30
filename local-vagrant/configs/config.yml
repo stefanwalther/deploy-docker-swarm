@@ -1,7 +1,7 @@
 VM_BOX: "ubuntu/trusty64"
 
-NUM_OF_MANAGERS: 1
-NUM_OF_WORKERS: 0
+NUM_OF_MANAGERS: 3
+NUM_OF_WORKERS: 2
 MEMORY_MANAGER: 2048
 MEMORY_WORKER: 2048
 VIDEO_MEMORY: 25
@@ -26,14 +26,14 @@ NETWORK_BRIDGE_DEFAULT: "Realtek PCIe GBE Family Controller #2"
 
 # Definition of forwarded_ports (see more: https://www.vagrantup.com/docs/networking/forwarded_ports.html)
 FORWARDED_PORTS:
-  - id: ssh-external
-    host_ip: 127.0.0.1
-    guest: 22
-    host: 2223
-    protocol: tcp
-    disabled: false
-    auto_correct: true
-    vm: manager-1
+#  - id: ssh-external
+#    host_ip: 127.0.0.1
+#    guest: 22
+#    host: 2223
+#    protocol: tcp
+#    disabled: false
+#    auto_correct: true
+#    vm: manager-1
 
 # Mount shared/sync-folders (see: https://www.vagrantup.com/docs/synced-folders/basic_usage.html)
 SYNCED_FOLDERS:
