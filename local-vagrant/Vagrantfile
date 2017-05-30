@@ -143,7 +143,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.vm.provision "shell", inline: @cleanUp
 
   # -- General configurations
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = settings['VM_BOX'] || "ubuntu/trusty64"
   config.vm.provision "docker"
 
   config.vm.provider 'virtualbox' do |v|

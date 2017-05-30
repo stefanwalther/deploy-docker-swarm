@@ -1,3 +1,5 @@
+VM_BOX: "ubuntu/trusty64"
+
 NUM_OF_MANAGERS: 1
 NUM_OF_WORKERS: 0
 MEMORY_MANAGER: 2048
@@ -31,7 +33,7 @@ FORWARDED_PORTS:
     protocol: tcp
     disabled: false
     auto_correct: true
-    vm: manager-1 
+    vm: manager-1
 
 # Mount shared/sync-folders (see: https://www.vagrantup.com/docs/synced-folders/basic_usage.html)
 SYNCED_FOLDERS:
