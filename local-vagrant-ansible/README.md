@@ -40,3 +40,4 @@ Some articles which inspired this work.
 - https://github.com/denverdino/docker-swarm-mode-vagrant/blob/master/Vagrantfile
 - https://github.com/mrlesmithjr/vagrant-ansible-docker-swarm
 - https://www.simonholywell.com/post/2016/02/intelligent-vagrant-and-ansible-files/
+- http://jamesdmorgan.github.io/2016/docker-swarm/#swarm-node-labels !!!

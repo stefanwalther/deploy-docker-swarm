@@ -75,6 +75,8 @@ $ vagrant --config-file=/configs/config.dev.yml up
 | `VBGUEST_NO_REMOTE`       | Boolean                           | Prevent downloading VBGuest binaries from remote                                  
 | `NETWORK_BRIDGED`         | Boolean                           | Whether to add a bridged network.                                  
 | `NETWORK_BRIDGED_DEFAULT` | String                            | Default network device for network bridge.                                  
+| ``                        |                                   |                                   
+| ``                        |                                   |                                   
 
 ### Multi-Machine Options
 

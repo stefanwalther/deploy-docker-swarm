@@ -30,7 +30,7 @@ opts = GetoptLong.new(
   [ '--debug', GetoptLong::NO_ARGUMENT ],
 
   # Custom options
-  ['--config-file', GetoptLong::OPTIONAL_ARGUMENT]
+  [ '--config-file', GetoptLong::OPTIONAL_ARGUMENT ]
 )
 
 configFile='./configs/config.yml'
@@ -246,8 +246,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       # Todo: Not really nice, but couldn't find any better way to provision one of the managers at "the end" of the process
       # Todo: This ugly hack is actually the main reason why this solution is not really nice and a combination of
-      #   - vagrant & bash
-      #   - vagrant & ansible
+      #   - vagrant & bash (see repo local-vagrant-bash)
+      #   - vagrant & ansible (see repo local-vagrant-ansible)
       # might be the better and more stable approach.
 
       # Any hint welcome how to improve this ...
